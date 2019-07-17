@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+    <Product Name='{{productName}}'
+             Manufacturer='{{manufacturer}}'
+             Id='{{idUUID}}'
+             UpgradeCode='{{upgradeCodeUUID}}'
+             Language='1031'
+             Codepage='1252'
+             Version='{{productVersion}}'>
+        <Package Id='*'
+                 Keywords='Installer'
+                 Description="{{productName}} Installer"
+                 Comments='{{productComment}}'
+                 Manufacturer='{{manufacturer}}'
+                 InstallerVersion='100'
+                 Languages='1031'
+                 Compressed='yes'
+                 SummaryCodepage='1252'
+                 {{#requestAdminPrivileges}}
+                 InstallPrivileges='elevated'
+                 InstallScope='perMachine'
+                 {{/requestAdminPrivileges}}
+        />
+
+        {{#licenceRtfPath}}
+        <WixVariable Id="WixUILicenseRtf" Value="{{licenceRtfPath}}" />
+        {{/licenceRtfPath}}
+        {{#dialogBackground}}
+        <WixVariable Id="WixUIDialogBmp" Value="{{dialogBackground}}" />
+        {{/dialogBackground}}
+        {{#bannerTop}}
+        <WixVariable Id="WixUIBannerBmp" Value="{{bannerTop}}" />
+        {{/bannerTop}}
+        {{#requestAdminPrivileges}}
+        <Property Id="MSIUSEREALADMINDETECTION" Value="1" />
+        {{/requestAdminPrivileges}}
+        <Media Id='1' Cabinet='installer.cab' EmbedCab='yes' DiskPrompt="Installer Failure (DiskPrompt)"/>
+        <Property Id='DiskPrompt' Value="{{productName}} Installation [1]"/>
+
+        <Icon Id="icon.ico" SourceFile="{{iconPath}}"/>
+
+        <Feature Id='Complete' Level='1'>
+            {{#components}}
+                <ComponentRef Id='{{.}}'/>
+            {{/components}}
+        </Feature>
+
+        <Directory Id='TARGETDIR' Name='SourceDir'>
+            <Directory Id='ProgramFilesFolder' Name='dirProgramFiles'>
+                <Directory Id="dirCompany" Name="{{manufacturer}}">
+                    {{#rootDir}}
+                        <Directory Id="{{dirId}}" Name="{{dirName}}">
+                            {{#directories}}
+                                <Directory Id="{{dirId}}" Name="{{dirName}}">
+                                    {{>directories}}
+                                </Directory>
+                            {{/directories}}
+                            {{>files}}
+                        </Directory>
+                    {{/rootDir}}
+                </Directory>
+            </Directory>
+            <Directory Id="DesktopFolder" Name="Desktop"/>
+        </Directory>
+
+        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+        <UIRef Id="WixUI_InstallDir"/>
+
+        {{#runPostInstall}}
+        <CustomAction Id="{{actionId}}"
+                      ExeCommand="[INSTALLDIR]{{executable}}"
+                      Directory="INSTALLDIR"
+                      Execute="deferred"
+                      Impersonate="no"
+                      Return="asyncWait"/>
+        {{/runPostInstall}}
+
+        {{#runPreUninstall}}
+            <CustomAction Id="BeforeUninstall{{actionId}}"
+                          ExeCommand="[INSTALLDIR]{{executable}}"
+                          Directory="INSTALLDIR"
+                          Execute="deferred"
+                          Impersonate="no"
+                          Return="asyncWait"/>
+        {{/runPreUninstall}}
+
+
+        <InstallExecuteSequence>
+        {{#runPostInstall}}
+            <Custom Action="{{actionId}}" After="InstallFiles">NOT Installed</Custom>
+        {{/runPostInstall}}
+        {{#runPreUninstall}}
+            <Custom Action="BeforeUninstall{{actionId}}" After="InstallInitialize">REMOVE="ALL"</Custom>
+        {{/runPreUninstall}}
+        </InstallExecuteSequence>
+    </Product>
+</Wix>

@@ -1,0 +1,18 @@
+{{#files}}
+    <Component Id='{{componentId}}' Guid='{{componentUUID}}'>
+        <File Id='{{fileId}}' Name='{{fileName}}' DiskId='1' Source='{{fileSource}}' KeyPath='yes'>
+            {{#mainExecutable}}
+                <Shortcut Id="desktopMainExecutable" Directory="DesktopFolder" Name="{{info.productName}}" WorkingDirectory='{{parent.dirId}}' Icon="icon.ico" IconIndex="0" Advertise="yes" />
+            {{/mainExecutable}}
+        </File>
+        {{#mainExecutable}}
+            {{#info.autostart}}
+        <RegistryValue Id="autostartMainExecutable" Root="HKMU" Action="write"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Run"
+                       Name="{{info.productName}}"
+                       Value="[#{{fileId}}]"
+                       Type="string" />
+            {{/info.autostart}}
+        {{/mainExecutable}}
+    </Component>
+{{/files}}

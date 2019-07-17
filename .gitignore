@@ -1,0 +1,11 @@
+.idea/
+.maven/
+.mvn/
+.log/
+.logs/
+target/
+build/
+logs/
+**/*.jar
+**/*.class
+**/*.iml
