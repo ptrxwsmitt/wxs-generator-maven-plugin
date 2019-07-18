@@ -6,6 +6,7 @@ data class FileTemplateData(
     val fileId: String,
     val fileSource: String,
     val mainExecutable: Boolean = false,
+    val mainBatch: Boolean = false,
     val componentId: String,
     val componentUUID: String,
     val info: InstallerTemplateData,

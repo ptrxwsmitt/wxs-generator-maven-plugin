@@ -57,7 +57,10 @@ class WxsFileTreeVisitor(private val templateData: InstallerTemplateData) : Simp
         componentAndFileIndex++
 
         val componentUUID = UUID.randomUUID().toString()
-        val isMainExecutable = mainExecutablePath.toString() == file.toString()
+        val mainExecutable = mainExecutablePath.toString()
+        val isMainExecutable = mainExecutable == file.toString()
+        val isMainBatch = isMainExecutable && mainExecutable.endsWith(".bat")
+
         //special name/id for main executable, in order to create desktop link
         val componentId = if (isMainExecutable) {
             "MainExecutable"
@@ -71,6 +74,7 @@ class WxsFileTreeVisitor(private val templateData: InstallerTemplateData) : Simp
             fileId = "file_$componentAndFileIndex",
             componentUUID = componentUUID,
             mainExecutable = isMainExecutable,
+            mainBatch = isMainBatch,
             componentId = componentId,
             info = templateData,
             parent = currentDirectory
