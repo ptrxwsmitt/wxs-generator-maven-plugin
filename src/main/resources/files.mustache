@@ -1,14 +1,6 @@
 {{#files}}
     <Component Id='{{componentId}}' Guid='{{componentUUID}}'>
         <File Id='{{fileId}}' Name='{{fileName}}' DiskId='1' Source='{{fileSource}}' KeyPath='yes'>
-            {{#mainExecutable}}
-                {{#isBatch}}
-            <Shortcut Id="desktopMainExecutable" Directory="DesktopFolder" Name="{{info.productName}}" WorkingDirectory='{{parent.dirId}}' Target="cmd.exe" Arguments=' /k \"[{{parent.dirId}}]{{fileName}}"' Icon="icon.ico" IconIndex="0" Advertise="yes" />
-                {{/isBatch}}
-                {{^isBatch}}
-            <Shortcut Id="desktopMainExecutable" Directory="DesktopFolder" Name="{{info.productName}}" WorkingDirectory='{{parent.dirId}}' Icon="icon.ico" IconIndex="0" Advertise="yes" />
-                {{/isBatch}}
-            {{/mainExecutable}}
         </File>
         {{#mainExecutable}}
             {{#info.autostart}}

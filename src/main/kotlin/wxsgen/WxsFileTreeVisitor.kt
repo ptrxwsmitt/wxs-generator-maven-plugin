@@ -1,8 +1,9 @@
 package wxsgen
 
-import wxsgen.model.template.InstallerTemplateData
 import wxsgen.model.template.DirectoryTemplateData
 import wxsgen.model.template.FileTemplateData
+import wxsgen.model.template.InstallerTemplateData
+import wxsgen.model.template.ShortcutData
 import java.io.IOException
 import java.nio.file.FileVisitResult
 import java.nio.file.Path
@@ -56,31 +57,35 @@ class WxsFileTreeVisitor(private val templateData: InstallerTemplateData) : Simp
         //create file entry and add it to the current directory
         componentAndFileIndex++
 
-        val componentUUID = UUID.randomUUID().toString()
-        val mainExecutable = mainExecutablePath.toString()
-        val isMainExecutable = mainExecutable == file.toString()
-        val isMainBatch = isMainExecutable && mainExecutable.endsWith(".bat")
-
-        //special name/id for main executable, in order to create desktop link
-        val componentId = if (isMainExecutable) {
-            "MainExecutable"
-        } else {
-            "component_$componentAndFileIndex"
-        }
+        val isMainExecutable = mainExecutablePath.toString() == file.toString()
 
         val currentFile = FileTemplateData(
+            fileId = "file_$componentAndFileIndex",
             fileName = file.fileName.toString(),
             fileSource = file.toString(),
-            fileId = "file_$componentAndFileIndex",
-            componentUUID = componentUUID,
+            componentId = "component_$componentAndFileIndex",
+            componentUUID = UUID.randomUUID().toString(),
             mainExecutable = isMainExecutable,
-            mainBatch = isMainBatch,
-            componentId = componentId,
             info = templateData,
             parent = currentDirectory
         )
         currentDirectory.files.add(currentFile)
-        templateData.components.add(componentId)
+        templateData.components.add(currentFile.componentId)
+
+        if (isMainExecutable) {
+            val shortcut = ShortcutData(
+                shortcutId = "shortcut_$componentAndFileIndex",
+                componentId = "component_shortcut_$componentAndFileIndex",
+                componentUUID = UUID.randomUUID().toString(),
+                refFileId = currentFile.fileId,
+                refFileName = currentFile.fileName,
+                refDirectoryId = currentDirectory.dirId,
+                isBatch = currentFile.fileName.endsWith(".bat")
+            )
+
+            templateData.shortcuts.add(shortcut)
+            templateData.components.add(shortcut.componentId)
+        }
         return super.visitFile(file, attrs)
     }
 
