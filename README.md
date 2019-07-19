@@ -100,4 +100,4 @@ MIT Licence (see LICENCE File)
 Initial Version
 
 ##### 2019-07-19 
-Desktop Shortcut of bat files can now be pinned to Task Bar
+Desktop Shortcut of bat file can now be pinned to Task Bar
