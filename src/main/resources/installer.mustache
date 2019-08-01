@@ -61,9 +61,13 @@
                 </Directory>
             </Directory>
             <Directory Id="DesktopFolder" Name="Desktop"/>
+            <Directory Id="ProgramMenuFolder">
+                <Directory Id="dirProductStartMenu" Name="{{productName}}"/>
+            </Directory>
         </Directory>
 
-{{>shortcuts}}
+        {{>desktopShortcuts}}
+        {{>startMenuShortcuts}}
 
         <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
         <UIRef Id="WixUI_InstallDir"/>

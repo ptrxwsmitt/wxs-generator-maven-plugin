@@ -15,7 +15,8 @@ data class InstallerTemplateData(
     val idUUID: String,
     val upgradeCodeUUID: String,
     val components: MutableList<String> = mutableListOf(),
-    val shortcuts: MutableList<ShortcutData> = mutableListOf(),
+    val desktopShortcuts: MutableList<ShortcutData> = mutableListOf(),
+    val startMenuShortcuts: MutableList<ShortcutData> = mutableListOf(),
     val rootDir: DirectoryTemplateData,
     val runPostInstall: List<ActionTemplateData> = emptyList(),
     val runPreUninstall: List<ActionTemplateData> = emptyList()

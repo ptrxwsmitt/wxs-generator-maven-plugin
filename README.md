@@ -101,3 +101,6 @@ Initial Version
 
 ##### 2019-07-19 
 Desktop Shortcut of bat file can now be pinned to Task Bar
+
+##### 2019-08-01
+Start Menu Entry is now created automatically

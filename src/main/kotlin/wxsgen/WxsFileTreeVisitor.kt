@@ -33,7 +33,7 @@ class WxsFileTreeVisitor(private val templateData: InstallerTemplateData) : Simp
     override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes): FileVisitResult {
         val directoryName = dir.fileName.toString()
         //exclude root dir
-        if (directoryLevel > 0 || directoryName != wxsExcludeDirName) {
+        if (directoryLevel > 0 && directoryName != wxsExcludeDirName) {
             directoryIndex++
 
             //create a directory and use it as current directory
@@ -73,6 +73,8 @@ class WxsFileTreeVisitor(private val templateData: InstallerTemplateData) : Simp
         templateData.components.add(currentFile.componentId)
 
         if (isMainExecutable) {
+
+            val isBatch = currentFile.fileName.endsWith(".bat")
             val shortcut = ShortcutData(
                 shortcutId = "shortcut_$componentAndFileIndex",
                 componentId = "component_shortcut_$componentAndFileIndex",
@@ -80,11 +82,23 @@ class WxsFileTreeVisitor(private val templateData: InstallerTemplateData) : Simp
                 refFileId = currentFile.fileId,
                 refFileName = currentFile.fileName,
                 refDirectoryId = currentDirectory.dirId,
-                isBatch = currentFile.fileName.endsWith(".bat")
+                isBatch = isBatch
             )
 
-            templateData.shortcuts.add(shortcut)
+            templateData.desktopShortcuts.add(shortcut)
             templateData.components.add(shortcut.componentId)
+
+            val startMenuShortcut = ShortcutData(
+                shortcutId = "start_menu_shortcut_$componentAndFileIndex",
+                componentId = "component_start_menu_shortcut_$componentAndFileIndex",
+                componentUUID = UUID.randomUUID().toString(),
+                refFileId = currentFile.fileId,
+                refFileName = currentFile.fileName,
+                refDirectoryId = currentDirectory.dirId,
+                isBatch = isBatch
+            )
+            templateData.startMenuShortcuts.add(startMenuShortcut)
+            templateData.components.add(startMenuShortcut.componentId)
         }
         return super.visitFile(file, attrs)
     }
