@@ -112,6 +112,13 @@ class WxsGeneratorMojo : AbstractMojo() {
     @Parameter
     private var runPreUninstall = ""
 
+
+    /**
+     * Switch for enabling/disabling x64 architecture (default 'true').
+     */
+    @Parameter
+    private var x64 = "true"
+
     @Parameter
     private var requestAdminPrivileges = "true"
 
@@ -159,7 +166,8 @@ class WxsGeneratorMojo : AbstractMojo() {
             installerLocale = installerLocale,
             productComment = productDescription,
             runPostInstall = runPostInstallList,
-            runPreUninstall = runPreUninstallList
+            runPreUninstall = runPreUninstallList,
+            archX64 = x64.toBoolean()
         )
 
         log.debug("wxp generator parameters:\n$params")

@@ -1,5 +1,5 @@
 @echo off
 
-call candle.exe "{{wxsName}}.wxs"
+call candle.exe{{#archX64}} -arch x64{{/archX64}} "{{wxsName}}.wxs"
 
 call light.exe -ext WixUIExtension -cultures:{{locale}} "{{wxsName}}.wixobj"

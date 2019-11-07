@@ -19,7 +19,8 @@ data class InstallerTemplateData(
     val startMenuShortcuts: MutableList<ShortcutData> = mutableListOf(),
     val rootDir: DirectoryTemplateData,
     val runPostInstall: List<ActionTemplateData> = emptyList(),
-    val runPreUninstall: List<ActionTemplateData> = emptyList()
+    val runPreUninstall: List<ActionTemplateData> = emptyList(),
+    val archX64: Boolean = true
 )
 
 

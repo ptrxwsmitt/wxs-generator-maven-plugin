@@ -60,7 +60,8 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
             iconPath = param.iconPath,
             licenceRtfPath = param.licenceRtfPath,
             upgradeCodeUUID = upgradeUUID,
-            rootDir = rootDir
+            rootDir = rootDir,
+            archX64 = param.archX64
         )
 
         val fileVisitor = WxsFileTreeVisitor(templateData, uuidGenerator)

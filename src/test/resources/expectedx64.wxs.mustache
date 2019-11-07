@@ -12,6 +12,7 @@
                  Description="test product 1.5 Installer"
                  Comments='test comment'
                  Manufacturer='test orga name'
+                 Platform='x64'
                  InstallerVersion='200'
                  Languages='1031'
                  Compressed='yes'
@@ -38,7 +39,7 @@
         </Feature>
 
         <Directory Id='TARGETDIR' Name='SourceDir'>
-            <Directory Id='ProgramFilesFolder' Name='dirProgramFiles'>
+            <Directory Id='ProgramFiles64Folder' Name='dirProgramFiles'>
                 <Directory Id="dirCompany" Name="test orga name">
                         <Directory Id="INSTALLDIR" Name="test product 1.5">
                                 <Directory Id="directory_1" Name="conf">

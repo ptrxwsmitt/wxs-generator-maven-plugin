@@ -12,7 +12,10 @@
                  Description="{{productName}} Installer"
                  Comments='{{productComment}}'
                  Manufacturer='{{manufacturer}}'
-                 InstallerVersion='100'
+                 {{#archX64}}
+                 Platform='x64'
+                 {{/archX64}}
+                 InstallerVersion='200'
                  Languages='1031'
                  Compressed='yes'
                  SummaryCodepage='1252'
@@ -46,7 +49,7 @@
         </Feature>
 
         <Directory Id='TARGETDIR' Name='SourceDir'>
-            <Directory Id='ProgramFilesFolder' Name='dirProgramFiles'>
+            <Directory Id='{{#archX64}}ProgramFiles64Folder{{/archX64}}{{^archX64}}ProgramFilesFolder{{/archX64}}' Name='dirProgramFiles'>
                 <Directory Id="dirCompany" Name="{{manufacturer}}">
                     {{#rootDir}}
                         <Directory Id="{{dirId}}" Name="{{dirName}}">
