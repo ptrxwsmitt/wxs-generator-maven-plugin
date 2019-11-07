@@ -1,7 +1,7 @@
 package wxsgen.plugin.log
 
-import wxsgen.log.LogFacade
 import org.apache.maven.plugin.logging.Log
+import wxsgen.log.LogFacade
 
 /**
  * Maven Plugin Logging Implementation of the Log Facade for the WXS Generator.

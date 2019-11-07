@@ -6,7 +6,6 @@ import wxsgen.model.WxsGeneratorParameter
 import wxsgen.model.template.ActionTemplateData
 import wxsgen.model.template.DirectoryTemplateData
 import wxsgen.model.template.InstallerTemplateData
-import java.io.FileWriter
 import java.lang.String.format
 import java.nio.file.Files
 import java.nio.file.Paths

@@ -4,14 +4,10 @@ import org.apache.maven.plugin.AbstractMojo
 import org.apache.maven.plugin.MojoFailureException
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
-import wxsgen.common.MustacheUtil
 import wxsgen.model.WxsGeneratorParameter
 import wxsgen.plugin.log.PluginLogImpl
-import wxsgen.plugin.model.BuildInstallerBatchTemplateData
 import wxsgen.service.BatchFileGenerator
 import wxsgen.service.WxsFileGenerator
-import java.io.FileWriter
-import java.nio.file.Files
 import java.nio.file.Paths
 
 /**
