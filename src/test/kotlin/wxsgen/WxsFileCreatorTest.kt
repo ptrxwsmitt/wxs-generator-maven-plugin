@@ -10,11 +10,15 @@ import wxsgen.service.UuidGenerator
 import wxsgen.service.WxsFileGenerator
 import java.io.FileReader
 import java.io.StringWriter
+import java.lang.StringBuilder
+import java.nio.charset.StandardCharsets
 import java.nio.file.Path
 import java.nio.file.Paths
+import kotlin.math.min
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 
 class WxsFileCreatorTest {
@@ -26,7 +30,7 @@ class WxsFileCreatorTest {
     private val testTargetFile: Path = Paths.get("tmp/test.wxs")
     private val expectedFile: Path = Paths.get("src/test/resources/expected.wxs")
 
-    class ExpectedTemplate(val testDirectory:String)
+    class ExpectedTemplate(val testDirectory: String)
 
     @BeforeTest
     fun setup() {
@@ -67,7 +71,7 @@ class WxsFileCreatorTest {
     }
 
 
-    private fun buildExpectedWxs() : String  {
+    private fun buildExpectedWxs(): String {
         val mustacheTemplate = MustacheUtil.prepareTemplateFromResource("expected.wxs.mustache")
         val writer = StringWriter()
         writer.use {
@@ -76,9 +80,9 @@ class WxsFileCreatorTest {
         return writer.toString()
     }
 
-    private fun readGeneratedWxs() : String  {
+    private fun readGeneratedWxs(): String {
         val generatedWxsReader = FileReader(testTargetFile.toFile())
-        var content:String = ""
+        var content: String = ""
         generatedWxsReader.use {
             content = generatedWxsReader.readText()
         }
