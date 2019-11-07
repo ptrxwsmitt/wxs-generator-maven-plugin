@@ -4,7 +4,7 @@ import org.apache.maven.plugin.AbstractMojo
 import org.apache.maven.plugin.MojoFailureException
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
-import wxsgen.WxsFileGenerator
+import wxsgen.service.WxsFileGenerator
 import wxsgen.common.MustacheUtil
 import wxsgen.model.WxsGeneratorParameter
 import wxsgen.plugin.log.PluginLogImpl

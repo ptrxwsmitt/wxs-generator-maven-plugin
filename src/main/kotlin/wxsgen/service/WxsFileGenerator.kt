@@ -1,4 +1,4 @@
-package wxsgen
+package wxsgen.service
 
 import wxsgen.common.MustacheUtil
 import wxsgen.log.LogFacade
@@ -10,14 +10,13 @@ import java.io.FileWriter
 import java.lang.String.format
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.*
 
 /**
  * Generator for a WXS File based on mustache templates.
  *
  * @author Patrick Waldschmitt
  */
-class WxsFileGenerator(private val log: LogFacade) {
+class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: UuidGenerator = JdkUuidGenerator()) {
 
     /**
      * Generates the WXS File.
@@ -31,7 +30,7 @@ class WxsFileGenerator(private val log: LogFacade) {
         Files.createDirectories(targetFilePath.parent)
         Files.deleteIfExists(targetFilePath)
 
-        val upgradeUUID = UUID.randomUUID().toString()
+        val upgradeUUID = uuidGenerator.generateUuid()
         val postInstallActionList = createActions(param.runPostInstall)
         val preUninstallActionList = createActions(param.runPreUninstall)
         val mainExecutable = executablePath.toString()
@@ -64,15 +63,17 @@ class WxsFileGenerator(private val log: LogFacade) {
             rootDir = rootDir
         )
 
-        val fileVisitor = WxsFileTreeVisitor(templateData)
+        val fileVisitor = WxsFileTreeVisitor(templateData, uuidGenerator)
         Files.walkFileTree(rootPathLocal, fileVisitor)
 
         val mustacheTemplate = MustacheUtil.prepareTemplateFromResource("installer.mustache")
 
         //create target file AFTER walking the file tree, in order to keep it out of the installed data
         Files.createFile(targetFilePath)
-        val writer = FileWriter(targetFilePath.toFile())
-        mustacheTemplate.execute(writer, templateData).flush()
+        val writer = Files.newBufferedWriter(targetFilePath)
+        writer.use {
+            mustacheTemplate.execute(writer, templateData).flush()
+        }
 
     }
 

@@ -9,3 +9,4 @@ logs/
 **/*.jar
 **/*.class
 **/*.iml
+tmp/

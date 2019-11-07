@@ -1,4 +1,4 @@
-package wxsgen
+package wxsgen.service
 
 import wxsgen.model.template.DirectoryTemplateData
 import wxsgen.model.template.FileTemplateData
@@ -10,7 +10,6 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.SimpleFileVisitor
 import java.nio.file.attribute.BasicFileAttributes
-import java.util.*
 
 
 /**
@@ -18,7 +17,7 @@ import java.util.*
  *
  * @author Patrick Waldschmitt
  */
-class WxsFileTreeVisitor(private val templateData: InstallerTemplateData) : SimpleFileVisitor<Path>() {
+class WxsFileTreeVisitor(private val templateData: InstallerTemplateData, private val uuidGenerator: UuidGenerator = JdkUuidGenerator()) : SimpleFileVisitor<Path>() {
 
     private val mainExecutablePath = Paths.get(templateData.mainExecutable)
     private val wxsExcludeDirName = ".wxs-exclude"
@@ -64,7 +63,7 @@ class WxsFileTreeVisitor(private val templateData: InstallerTemplateData) : Simp
             fileName = file.fileName.toString(),
             fileSource = file.toString(),
             componentId = "component_$componentAndFileIndex",
-            componentUUID = UUID.randomUUID().toString(),
+            componentUUID = uuidGenerator.generateUuid(),
             mainExecutable = isMainExecutable,
             info = templateData,
             parent = currentDirectory
@@ -78,7 +77,7 @@ class WxsFileTreeVisitor(private val templateData: InstallerTemplateData) : Simp
             val shortcut = ShortcutData(
                 shortcutId = "shortcut_$componentAndFileIndex",
                 componentId = "component_shortcut_$componentAndFileIndex",
-                componentUUID = UUID.randomUUID().toString(),
+                componentUUID = uuidGenerator.generateUuid(),
                 refFileId = currentFile.fileId,
                 refFileName = currentFile.fileName,
                 refDirectoryId = currentDirectory.dirId,
@@ -91,7 +90,7 @@ class WxsFileTreeVisitor(private val templateData: InstallerTemplateData) : Simp
             val startMenuShortcut = ShortcutData(
                 shortcutId = "start_menu_shortcut_$componentAndFileIndex",
                 componentId = "component_start_menu_shortcut_$componentAndFileIndex",
-                componentUUID = UUID.randomUUID().toString(),
+                componentUUID = uuidGenerator.generateUuid(),
                 refFileId = currentFile.fileId,
                 refFileName = currentFile.fileName,
                 refDirectoryId = currentDirectory.dirId,
