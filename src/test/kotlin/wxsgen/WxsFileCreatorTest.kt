@@ -33,12 +33,6 @@ class WxsFileCreatorTest {
         root = createSampleFiles()
     }
 
-    private fun buildExpectedWxs() : String  {
-        val mustacheTemplate = MustacheUtil.prepareTemplateFromResource("expected.wxs.mustache")
-        val writer = StringWriter()
-        mustacheTemplate.execute(writer, ExpectedTemplate(root!!.toAbsolutePath().toString()))
-        return writer.toString()
-    }
 
     @Test
     fun createWXSTest() {
@@ -66,9 +60,29 @@ class WxsFileCreatorTest {
         wxsGenerator.generate(testData)
 
         // then
+        val generatedWxs = readGeneratedWxs()
         val expectedWxs = buildExpectedWxs()
-        val generatedWxs = FileReader(testTargetFile.toFile()).readText()
+
         assertThat(generatedWxs).isEqualTo(expectedWxs)
+    }
+
+
+    private fun buildExpectedWxs() : String  {
+        val mustacheTemplate = MustacheUtil.prepareTemplateFromResource("expected.wxs.mustache")
+        val writer = StringWriter()
+        writer.use {
+            mustacheTemplate.execute(writer, ExpectedTemplate(root!!.toAbsolutePath().toString()))
+        }
+        return writer.toString()
+    }
+
+    private fun readGeneratedWxs() : String  {
+        val generatedWxsReader = FileReader(testTargetFile.toFile())
+        var content:String = ""
+        generatedWxsReader.use {
+            content = generatedWxsReader.readText()
+        }
+        return content
     }
 
     @AfterTest
