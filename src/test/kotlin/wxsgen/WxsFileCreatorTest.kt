@@ -2,6 +2,7 @@ package wxsgen
 
 import wxsgen.model.WxsGeneratorParameter
 import org.apache.commons.io.FileUtils
+import org.assertj.core.api.Assertions.assertThat
 import java.io.FileReader
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -13,7 +14,8 @@ import kotlin.test.Test
 class WxsFileCreatorTest {
 
     private var root: Path? = null
-    private val testTargetFile: Path = Paths.get("target/unittest/temp/test.wxs")
+    private val expectedFile: Path = Paths.get("src/test/resources/expected.wxs")
+    private val testTargetFile: Path = Paths.get("tmp/test.wxs")
 
     @BeforeTest
     fun setup() {
@@ -38,8 +40,10 @@ class WxsFileCreatorTest {
             autostart = true
         )
         WxsFileGenerator(TestLogImpl()).generate(testData)
-        val fr = FileReader(testTargetFile.toFile())
-        println(fr.toString())
+        val generatedWxs = FileReader(testTargetFile.toFile()).readText()
+        val expectedWxs = FileReader(expectedFile.toFile()).readText()
+
+        assertThat(generatedWxs).isEqualTo(expectedWxs)
     }
 
     @AfterTest

@@ -9,3 +9,5 @@ logs/
 **/*.jar
 **/*.class
 **/*.iml
+tmp/
+generated-java/

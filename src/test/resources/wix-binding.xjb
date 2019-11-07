@@ -1,0 +1,89 @@
+<bindings version="1.0"
+          xmlns="http://java.sun.com/xml/ns/jaxb"
+          xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <bindings schemaLocation="wix.xsd">
+        <!-- rename the value element  -->
+        <bindings node="//xs:element[@name='Category']">
+            <bindings node=".//xs:complexType">
+                <bindings node=".//xs:attribute[@name='AppData']">
+                    <property name="CategoryAppData"/>
+                </bindings>
+            </bindings>
+        </bindings>
+        <bindings node="//xs:element[@name='CustomAction']">
+            <bindings node=".//xs:complexType">
+                <bindings node=".//xs:simpleContent">
+                    <bindings node=".//xs:extension[@base='xs:string']">
+                        <bindings node=".//xs:attribute[@name='Value']">
+                            <property name="CustomActionValue"/>
+                        </bindings>
+                    </bindings>
+                </bindings>
+            </bindings>
+        </bindings>
+        <bindings node="//xs:element[@name='SetDirectory']">
+            <bindings node=".//xs:complexType">
+                <bindings node=".//xs:simpleContent">
+                    <bindings node=".//xs:extension[@base='xs:string']">
+                        <bindings node=".//xs:attribute[@name='Value']">
+                            <property name="SetDirectoryValue"/>
+                        </bindings>
+                    </bindings>
+                </bindings>
+            </bindings>
+        </bindings>
+        <bindings node="//xs:element[@name='SetProperty']">
+            <bindings node=".//xs:complexType">
+                <bindings node=".//xs:simpleContent">
+                    <bindings node=".//xs:extension[@base='xs:string']">
+                        <bindings node=".//xs:attribute[@name='Value']">
+                            <property name="SetPropertyValue"/>
+                        </bindings>
+                    </bindings>
+                </bindings>
+            </bindings>
+        </bindings>
+        <bindings node="//xs:element[@name='Publish']">
+            <bindings node=".//xs:complexType">
+                <bindings node=".//xs:simpleContent">
+                    <bindings node=".//xs:extension[@base='xs:string']">
+                        <bindings node=".//xs:attribute[@name='Value']">
+                            <property name="PublishValue"/>
+                        </bindings>
+                    </bindings>
+                </bindings>
+            </bindings>
+        </bindings>
+        <bindings node="//xs:element[@name='ListItem']">
+            <bindings node=".//xs:complexType">
+                <bindings node=".//xs:attribute[@name='Value']">
+                    <property name="ListItemValue"/>
+                </bindings>
+            </bindings>
+        </bindings>
+        <bindings node="//xs:element[@name='RadioButton']">
+            <bindings node=".//xs:complexType">
+                <bindings node=".//xs:attribute[@name='Value']">
+                    <property name="RadioButtonValue"/>
+                </bindings>
+            </bindings>
+        </bindings>
+        <bindings node="//xs:element[@name='WixVariable']">
+            <bindings node=".//xs:complexType">
+                <bindings node=".//xs:attribute[@name='Value']">
+                    <property name="WixVariableValue"/>
+                </bindings>
+            </bindings>
+        </bindings>
+        <bindings node="//xs:element[@name='Control']">
+            <bindings node=".//xs:complexType">
+                <bindings node=".//xs:attribute[@name='Text']">
+                    <property name="ControlText"/>
+                </bindings>
+                <bindings node=".//xs:attribute[@name='Property']">
+                    <property name="ControlProperty"/>
+                </bindings>
+            </bindings>
+        </bindings>
+    </bindings>
+</bindings>

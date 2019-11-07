@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+    <Product Name='test product 1.5'
+             Manufacturer='test orga name'
+             Id='myprodiuct.id'
+             UpgradeCode='f817392f-b8f9-4826-a33e-10654f8373b8'
+             Language='1031'
+             Codepage='1252'
+             Version='0.5.1'>
+        <Package Id='*'
+                 Keywords='Installer'
+                 Description="test product 1.5 Installer"
+                 Comments='test comment'
+                 Manufacturer='test orga name'
+                 InstallerVersion='100'
+                 Languages='1031'
+                 Compressed='yes'
+                 SummaryCodepage='1252'
+                 InstallPrivileges='elevated'
+                 InstallScope='perMachine'
+        />
+
+        <Property Id="MSIUSEREALADMINDETECTION" Value="1" />
+        <Media Id='1' Cabinet='installer.cab' EmbedCab='yes' DiskPrompt="Installer Failure (DiskPrompt)"/>
+        <Property Id='DiskPrompt' Value="test product 1.5 Installation [1]"/>
+
+        <Icon Id="icon.ico" SourceFile=""/>
+
+        <Feature Id='Complete' Level='1'>
+                <ComponentRef Id='component_1'/>
+                <ComponentRef Id='component_2'/>
+                <ComponentRef Id='component_3'/>
+                <ComponentRef Id='component_4'/>
+                <ComponentRef Id='component_5'/>
+                <ComponentRef Id='component_6'/>
+                <ComponentRef Id='component_shortcut_6'/>
+                <ComponentRef Id='component_start_menu_shortcut_6'/>
+        </Feature>
+
+        <Directory Id='TARGETDIR' Name='SourceDir'>
+            <Directory Id='ProgramFilesFolder' Name='dirProgramFiles'>
+                <Directory Id="dirCompany" Name="test orga name">
+                        <Directory Id="INSTALLDIR" Name="test product 1.5">
+                                <Directory Id="directory_1" Name="conf">
+                                        <Component Id='component_1' Guid='68df8369-b3db-4045-9cdb-216f791aff15'>
+        <File Id='file_1' Name='app.conf' DiskId='1' Source='C:\Users\PATRIC~1\AppData\Local\Temp\wixtest17395101397091198875\conf\app.conf' KeyPath='yes'>
+        </File>
+    </Component>
+    <Component Id='component_2' Guid='c92c0406-be4d-4931-8217-a6af904fdd74'>
+        <File Id='file_2' Name='log.xml' DiskId='1' Source='C:\Users\PATRIC~1\AppData\Local\Temp\wixtest17395101397091198875\conf\log.xml' KeyPath='yes'>
+        </File>
+    </Component>
+
+
+                                </Directory>
+                                <Directory Id="directory_2" Name="lib">
+                                        <Component Id='component_3' Guid='f8048684-fbea-495b-8979-be027ca755f1'>
+        <File Id='file_3' Name='apache.jar' DiskId='1' Source='C:\Users\PATRIC~1\AppData\Local\Temp\wixtest17395101397091198875\lib\apache.jar' KeyPath='yes'>
+        </File>
+    </Component>
+    <Component Id='component_4' Guid='be571263-b2ea-423f-bf21-c332ac1b01c4'>
+        <File Id='file_4' Name='hibernate.jar' DiskId='1' Source='C:\Users\PATRIC~1\AppData\Local\Temp\wixtest17395101397091198875\lib\hibernate.jar' KeyPath='yes'>
+        </File>
+    </Component>
+    <Component Id='component_5' Guid='dda471d2-5348-436b-8ac0-05226c50f003'>
+        <File Id='file_5' Name='random.jar' DiskId='1' Source='C:\Users\PATRIC~1\AppData\Local\Temp\wixtest17395101397091198875\lib\random.jar' KeyPath='yes'>
+        </File>
+    </Component>
+
+
+                                </Directory>
+                                <Component Id='component_6' Guid='5a6ab387-840d-4674-88d1-7c2e869f1bec'>
+        <File Id='file_6' Name='run.bat' DiskId='1' Source='C:\Users\PATRIC~1\AppData\Local\Temp\wixtest17395101397091198875\run.bat' KeyPath='yes'>
+        </File>
+        <RegistryValue Id="autostartMainExecutable" Root="HKMU" Action="write"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Run"
+                       Name="test product 1.5"
+                       Value="[#file_6]"
+                       Type="string" />
+    </Component>
+
+                        </Directory>
+                </Directory>
+            </Directory>
+            <Directory Id="DesktopFolder" Name="Desktop"/>
+            <Directory Id="ProgramMenuFolder">
+                <Directory Id="dirProductStartMenu" Name="test product 1.5"/>
+            </Directory>
+        </Directory>
+
+            <DirectoryRef Id="DesktopFolder">
+        <Component Id="component_shortcut_6" Guid="8a5c3627-2a42-4c67-8752-57cdd61defff">
+                <Shortcut Id="shortcut_6"
+                          Name="test product 1.5"
+                          WorkingDirectory="INSTALLDIR"
+                          Icon="icon.ico"
+                          IconIndex="0"
+                          Target="[SystemFolder]cmd.exe"
+                          Arguments=" /k &quot;[INSTALLDIR]run.bat&quot;"/>
+            <RegistryValue Root="HKCU" Key="Software\test orga name\test product 1.5" Name="shortcut_6" Type="integer" Value="1" KeyPath="yes"/>
+        </Component>
+    </DirectoryRef>
+
+            <DirectoryRef Id="dirProductStartMenu">
+        <Component Id="component_start_menu_shortcut_6" Guid="e3ad10b5-c84b-4781-a2d0-86aed4ba0e35">
+
+                <Shortcut Id="start_menu_shortcut_6"
+                          Name="test product 1.5"
+                          WorkingDirectory="INSTALLDIR"
+                          Icon="icon.ico"
+                          IconIndex="0"
+                          Target="[SystemFolder]cmd.exe"
+                          Arguments=" /k &quot;[INSTALLDIR]run.bat&quot;"/>
+            <RemoveFolder Id="CleanUpProductStartMenu" Directory="dirProductStartMenu" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\test orga name\test product 1.5" Name="start_menu_shortcut_6"
+                           Type="integer" Value="1" KeyPath="yes"/>
+        </Component>
+    </DirectoryRef>
+
+
+        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+        <UIRef Id="WixUI_InstallDir"/>
+
+
+
+
+        <InstallExecuteSequence>
+        </InstallExecuteSequence>
+    </Product>
+</Wix>

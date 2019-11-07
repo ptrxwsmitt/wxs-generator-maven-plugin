@@ -42,6 +42,8 @@
         <junit.version>5.4.2</junit.version>
 
         <owasp.version>5.1.1</owasp.version>
+
+        <generated.java.test.source>src/test/generated-java</generated.java.test.source>
     </properties>
 
     <dependencies>
@@ -73,6 +75,8 @@
             <version>3.4</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- testing -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit5</artifactId>
@@ -95,6 +99,12 @@
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.14.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -153,6 +163,50 @@
                         <goals>
                             <goal>helpmojo</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>2.5.0</version>
+                <executions>
+                    <execution>
+                        <id>xjc</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sources>
+                        <source>src/test/resources/wix.xsd</source>
+                    </sources>
+                    <xjbSources>
+                        <xjbSource>src/test/resources/wix-binding.xjb</xjbSource>
+                    </xjbSources>
+                    <packageName>wxsgen.wix.model</packageName>
+                    <outputDirectory>${generated.java.test.source}</outputDirectory>
+                    <clearOutputDir>true</clearOutputDir>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${generated.java.test.source}</source>
+                            </sources>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
