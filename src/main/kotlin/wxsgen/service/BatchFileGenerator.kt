@@ -21,7 +21,7 @@ class BatchFileGenerator {
         Files.createFile(batchPath)
         val batchWriter = Files.newBufferedWriter(batchPath)
         batchWriter.use {
-            mustacheTemplate?.execute(batchWriter, batchTemplateData)?.flush()
+            mustacheTemplate?.execute(it, batchTemplateData)?.flush()
         }
 
     }

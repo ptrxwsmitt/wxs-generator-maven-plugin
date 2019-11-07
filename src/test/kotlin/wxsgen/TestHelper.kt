@@ -38,7 +38,7 @@ fun createSampleFiles(): Path {
     val mustacheTemplate = MustacheUtil.prepareTemplateFromResource(template)
     val writer = StringWriter()
     writer.use {
-        mustacheTemplate?.execute(writer, data)
+        mustacheTemplate?.execute(it, data)
     }
     return writer.toString()
 }

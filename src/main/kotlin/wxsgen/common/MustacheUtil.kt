@@ -14,7 +14,7 @@ object MustacheUtil {
         val templateReader = InputStreamReader(templateStream, "utf-8")
         var mustache: Mustache? = null
         templateReader.use {
-            mustache = mustacheTemplateFactory.compile(templateReader, templatePath)
+            mustache = mustacheTemplateFactory.compile(it, templatePath)
         }
         return mustache
     }
