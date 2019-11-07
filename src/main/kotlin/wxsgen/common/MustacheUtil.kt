@@ -6,11 +6,16 @@ import java.io.InputStreamReader
 
 
 object MustacheUtil {
-    fun prepareTemplateFromResource(templatePath: String): Mustache {
-        val templateStream = this.javaClass.getResourceAsStream("/$templatePath")
-        val templateReader = InputStreamReader(templateStream, "utf-8")
+    fun prepareTemplateFromResource(templatePath: String): Mustache? {
+        val templateStream = this.javaClass.getResourceAsStream("/${templatePath}")
 
         val mustacheTemplateFactory = DefaultMustacheFactory()
-        return mustacheTemplateFactory.compile(templateReader, templatePath)
+
+        val templateReader = InputStreamReader(templateStream, "utf-8")
+        var mustache: Mustache? = null
+        templateReader.use {
+            mustache = mustacheTemplateFactory.compile(templateReader, templatePath)
+        }
+        return mustache
     }
 }

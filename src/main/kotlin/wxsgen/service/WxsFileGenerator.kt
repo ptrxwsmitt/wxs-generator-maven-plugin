@@ -73,7 +73,7 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
         Files.createFile(targetFilePath)
         val writer = Files.newBufferedWriter(targetFilePath)
         writer.use {
-            mustacheTemplate.execute(writer, templateData)
+            mustacheTemplate?.execute(writer, templateData)
         }
 
     }

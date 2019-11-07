@@ -1,5 +1,7 @@
 package wxsgen
 
+import wxsgen.common.MustacheUtil
+import java.io.StringWriter
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
@@ -30,4 +32,13 @@ fun createSampleFiles(): Path {
     Files.write(lib3File, "89536625252272525622232622".toByteArray(StandardCharsets.UTF_8))
 
     return root
+}
+
+ fun fillTemplate(template:String, data: Any?): String {
+    val mustacheTemplate = MustacheUtil.prepareTemplateFromResource(template)
+    val writer = StringWriter()
+    writer.use {
+        mustacheTemplate?.execute(writer, data)
+    }
+    return writer.toString()
 }

@@ -1,0 +1,5 @@
+@echo off
+
+call candle.exe -arch x64 "BatchFileGeneratorTest.wxs"
+
+call light.exe -ext WixUIExtension -cultures:de-de "BatchFileGeneratorTest.wixobj"

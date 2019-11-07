@@ -4,11 +4,12 @@ import org.apache.maven.plugin.AbstractMojo
 import org.apache.maven.plugin.MojoFailureException
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
-import wxsgen.service.WxsFileGenerator
 import wxsgen.common.MustacheUtil
 import wxsgen.model.WxsGeneratorParameter
 import wxsgen.plugin.log.PluginLogImpl
 import wxsgen.plugin.model.BuildInstallerBatchTemplateData
+import wxsgen.service.BatchFileGenerator
+import wxsgen.service.WxsFileGenerator
 import java.io.FileWriter
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -125,6 +126,7 @@ class WxsGeneratorMojo : AbstractMojo() {
 
     private val wixCreator =
         WxsFileGenerator(PluginLogImpl(log))
+    private val batGenerator = BatchFileGenerator()
 
     override fun execute() {
         if (productUid.isBlank()) {
@@ -176,35 +178,8 @@ class WxsGeneratorMojo : AbstractMojo() {
 
 
         if (provideBuildBatch.toBoolean()) {
-            provideBuildBatch(targetFile, locale = installerLocale)
+            batGenerator.generateBuildBatch(Paths.get(targetFile), installerLocale, x64.toBoolean())
         }
 
     }
-
-    private fun provideBuildBatch(targetFile: String, locale: String) {
-        val targetFilePath = Paths.get(targetFile)
-        Files.createDirectories(targetFilePath.parent)
-
-        val mustacheTemplate = MustacheUtil.prepareTemplateFromResource("buildInstaller.bat.mustache")
-
-        val fileName = removeFileEnding(targetFilePath.fileName.toString())
-
-        val batchPath = Paths.get(targetFilePath.parent.toString(), "buildInstaller.bat")
-        Files.createFile(batchPath)
-        val batchWriter = FileWriter(batchPath.toFile())
-
-        val batchTemplateData = BuildInstallerBatchTemplateData(fileName, locale)
-        mustacheTemplate.execute(batchWriter, batchTemplateData).flush()
-    }
-
-    private fun removeFileEnding(fileName: String): String {
-        val lastDot = fileName.lastIndexOf('.')
-        return if (lastDot > 0) {
-            fileName.substring(0, lastDot)
-        } else {
-            fileName
-        }
-    }
-
-
 }

@@ -4,12 +4,10 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import org.apache.commons.io.FileUtils
 import org.assertj.core.api.Java6Assertions.assertThat
-import wxsgen.common.MustacheUtil
 import wxsgen.model.WxsGeneratorParameter
 import wxsgen.service.UuidGenerator
 import wxsgen.service.WxsFileGenerator
-import java.io.FileReader
-import java.io.StringWriter
+import wxsgen.util.readToString
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.test.AfterTest
@@ -61,7 +59,7 @@ class WxsFileCreatorTest {
         wxsGenerator.generate(testData)
 
         // then
-        val generatedWxs = readGeneratedWxs()
+        val generatedWxs = testTargetFile.readToString()
         val expectedWxs = buildExpectedWxs("expected.wxs.mustache")
 
         assertThat(generatedWxs).isEqualTo(expectedWxs)
@@ -95,31 +93,15 @@ class WxsFileCreatorTest {
         wxsGenerator.generate(testData)
 
         // then
-        val generatedWxs = readGeneratedWxs()
+        val generatedWxs = testTargetFile.readToString()
         val expectedWxs = buildExpectedWxs("expectedx64.wxs.mustache")
 
         assertThat(generatedWxs).isEqualTo(expectedWxs)
     }
 
 
-
-    private fun buildExpectedWxs(template:String): String {
-        val mustacheTemplate = MustacheUtil.prepareTemplateFromResource(template)
-        val writer = StringWriter()
-        writer.use {
-            mustacheTemplate.execute(writer, ExpectedTemplate(root!!.toAbsolutePath().toString()))
-        }
-        return writer.toString()
-    }
-
-    private fun readGeneratedWxs(): String {
-        val generatedWxsReader = FileReader(testTargetFile.toFile())
-        var content: String = ""
-        generatedWxsReader.use {
-            content = generatedWxsReader.readText()
-        }
-        return content
-    }
+    private fun buildExpectedWxs(template: String) =
+        fillTemplate(template, ExpectedTemplate(root!!.toAbsolutePath().toString()))
 
     @AfterTest
     fun teardown() {
