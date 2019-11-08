@@ -20,6 +20,7 @@ data class InstallerTemplateData(
     val rootDir: DirectoryTemplateData,
     val runPostInstall: List<ActionTemplateData> = emptyList(),
     val runPreUninstall: List<ActionTemplateData> = emptyList(),
+    val messageDowngradeError: String,
     val archX64: Boolean = true
 )
 

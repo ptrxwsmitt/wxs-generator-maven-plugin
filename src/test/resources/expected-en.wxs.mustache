@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
-    <Product Name='test product 1.5'
+    <Product Name='test product'
              Manufacturer='test orga name'
              Id='new-UUID'
              UpgradeCode='myprodiuct.id'
@@ -9,10 +9,9 @@
              Version='0.5.1'>
         <Package Id='*'
                  Keywords='Installer'
-                 Description="test product 1.5 Installer"
+                 Description="test product Installer"
                  Comments='test comment'
                  Manufacturer='test orga name'
-                 Platform='x64'
                  InstallerVersion='200'
                  Languages='1031'
                  Compressed='yes'
@@ -22,8 +21,9 @@
         />
 
         <Property Id="MSIUSEREALADMINDETECTION" Value="1" />
+        <MajorUpgrade AllowSameVersionUpgrades='yes' DowngradeErrorMessage="A newer version of this software test product is already installed. Installation process canceled."/>
         <Media Id='1' Cabinet='installer.cab' EmbedCab='yes' DiskPrompt="Installer Failure (DiskPrompt)"/>
-        <Property Id='DiskPrompt' Value="test product 1.5 Installation [1]"/>
+        <Property Id='DiskPrompt' Value="test product Installation [1]"/>
 
         <Icon Id="icon.ico" SourceFile=""/>
 
@@ -39,9 +39,9 @@
         </Feature>
 
         <Directory Id='TARGETDIR' Name='SourceDir'>
-            <Directory Id='ProgramFiles64Folder' Name='dirProgramFiles'>
+            <Directory Id='ProgramFilesFolder' Name='dirProgramFiles'>
                 <Directory Id="dirCompany" Name="test orga name">
-                        <Directory Id="INSTALLDIR" Name="test product 1.5">
+                        <Directory Id="INSTALLDIR" Name="test product">
                                 <Directory Id="directory_1" Name="conf">
                                         <Component Id='component_1' Guid='new-UUID'>
         <File Id='file_1' Name='app.conf' DiskId='1' Source='{{testDirectory}}\conf\app.conf' KeyPath='yes'>
@@ -75,7 +75,7 @@
         </File>
         <RegistryValue Id="autostartMainExecutable" Root="HKMU" Action="write"
                        Key="Software\Microsoft\Windows\CurrentVersion\Run"
-                       Name="test product 1.5"
+                       Name="test product"
                        Value="[#file_6]"
                        Type="string" />
     </Component>
@@ -85,20 +85,20 @@
             </Directory>
             <Directory Id="DesktopFolder" Name="Desktop"/>
             <Directory Id="ProgramMenuFolder">
-                <Directory Id="dirProductStartMenu" Name="test product 1.5"/>
+                <Directory Id="dirProductStartMenu" Name="test product"/>
             </Directory>
         </Directory>
 
             <DirectoryRef Id="DesktopFolder">
         <Component Id="component_shortcut_6" Guid="new-UUID">
                 <Shortcut Id="shortcut_6"
-                          Name="test product 1.5"
+                          Name="test product"
                           WorkingDirectory="INSTALLDIR"
                           Icon="icon.ico"
                           IconIndex="0"
                           Target="[SystemFolder]cmd.exe"
                           Arguments=" /k &quot;[INSTALLDIR]run.bat&quot;"/>
-            <RegistryValue Root="HKCU" Key="Software\test orga name\test product 1.5" Name="shortcut_6" Type="integer" Value="1" KeyPath="yes"/>
+            <RegistryValue Root="HKCU" Key="Software\test orga name\test product" Name="shortcut_6" Type="integer" Value="1" KeyPath="yes"/>
         </Component>
     </DirectoryRef>
 
@@ -106,14 +106,14 @@
         <Component Id="component_start_menu_shortcut_6" Guid="new-UUID">
 
                 <Shortcut Id="start_menu_shortcut_6"
-                          Name="test product 1.5"
+                          Name="test product"
                           WorkingDirectory="INSTALLDIR"
                           Icon="icon.ico"
                           IconIndex="0"
                           Target="[SystemFolder]cmd.exe"
                           Arguments=" /k &quot;[INSTALLDIR]run.bat&quot;"/>
             <RemoveFolder Id="CleanUpProductStartMenu" Directory="dirProductStartMenu" On="uninstall"/>
-            <RegistryValue Root="HKCU" Key="Software\test orga name\test product 1.5" Name="start_menu_shortcut_6"
+            <RegistryValue Root="HKCU" Key="Software\test orga name\test product" Name="start_menu_shortcut_6"
                            Type="integer" Value="1" KeyPath="yes"/>
         </Component>
     </DirectoryRef>

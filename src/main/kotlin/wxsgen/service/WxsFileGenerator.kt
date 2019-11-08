@@ -9,6 +9,7 @@ import wxsgen.model.template.InstallerTemplateData
 import java.lang.String.format
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.*
 
 /**
  * Generator for a WXS File based on mustache templates.
@@ -16,6 +17,16 @@ import java.nio.file.Paths
  * @author Patrick Waldschmitt
  */
 class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: UuidGenerator = JdkUuidGenerator()) {
+
+    fun  loadResourceBundle(languageTag: String):ResourceBundle {
+        Locale.setDefault(Locale.ENGLISH)
+        val locale = Locale.forLanguageTag(languageTag)
+        return ResourceBundle.getBundle("bundles/messages",locale)
+    }
+
+    fun readMessageDowngradeError(resourceBundle: ResourceBundle, productName:String):String {
+        return format(resourceBundle.getString("messageDowngradeError"), productName)
+    }
 
     /**
      * Generates the WXS File.
@@ -42,6 +53,9 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
             parent = null
         )
 
+        val resourceBundle = loadResourceBundle(param.installerLocale)
+        val messageDowngradeError = readMessageDowngradeError(resourceBundle, param.productName)
+
         // according to this stackoverflow entry
         // https://stackoverflow.com/questions/500703/how-to-get-wix-to-update-a-previously-installed-version-of-a-program
         // for an upgrade the product id should be an ever changing ID and upgradeId should be stable
@@ -62,7 +76,8 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
             licenceRtfPath = param.licenceRtfPath,
             upgradeCodeUUID = param.productUid,
             rootDir = rootDir,
-            archX64 = param.archX64
+            archX64 = param.archX64,
+            messageDowngradeError = messageDowngradeError
         )
 
         val fileVisitor = WxsFileTreeVisitor(templateData, uuidGenerator)

@@ -47,7 +47,7 @@ class WxsFileCreatorTest {
             licenceRtfPath = "",
             installerLocale = "de-de",
             manufacturer = "test orga name",
-            productName = "test product 1.5",
+            productName = "test product",
             requestAdminPrivileges = true,
             autostart = true,
             archX64 = false
@@ -81,7 +81,7 @@ class WxsFileCreatorTest {
             licenceRtfPath = "",
             installerLocale = "de-de",
             manufacturer = "test orga name",
-            productName = "test product 1.5",
+            productName = "test product",
             requestAdminPrivileges = true,
             autostart = true,
             archX64 = true
@@ -93,7 +93,74 @@ class WxsFileCreatorTest {
 
         // then
         val generatedWxs = testTargetFile.readToString()
-        val expectedWxs = buildExpectedWxs("expectedx64.wxs.mustache")
+        val expectedWxs = buildExpectedWxs("expected-x64.wxs.mustache")
+
+        assertThat(generatedWxs).isEqualTo(expectedWxs)
+    }
+
+
+    @Test
+    fun createWXSEnglishTest() {
+
+        // given
+        whenever(uuidGeneratorService.generateUuid()).thenReturn("new-UUID")
+        val testData = WxsGeneratorParameter(
+            productUid = "myprodiuct.id",
+            rootPath = root.toString(),
+            targetFile = testTargetFile.toString(),
+            productVersion = "0.5.1",
+            mainExecutable = "run.bat",
+            productComment = "test comment",
+            iconPath = "",
+            licenceRtfPath = "",
+            installerLocale = "en-en",
+            manufacturer = "test orga name",
+            productName = "test product",
+            requestAdminPrivileges = true,
+            autostart = true,
+            archX64 = false
+        )
+
+        // when
+        val wxsGenerator = WxsFileGenerator(testLogger, uuidGeneratorService)
+        wxsGenerator.generate(testData)
+
+        // then
+        val generatedWxs = testTargetFile.readToString()
+        val expectedWxs = buildExpectedWxs("expected-en.wxs.mustache")
+
+        assertThat(generatedWxs).isEqualTo(expectedWxs)
+    }
+
+    @Test
+    fun createWXSChineseTest() {
+
+        // given
+        whenever(uuidGeneratorService.generateUuid()).thenReturn("new-UUID")
+        val testData = WxsGeneratorParameter(
+            productUid = "myprodiuct.id",
+            rootPath = root.toString(),
+            targetFile = testTargetFile.toString(),
+            productVersion = "0.5.1",
+            mainExecutable = "run.bat",
+            productComment = "test comment",
+            iconPath = "",
+            licenceRtfPath = "",
+            installerLocale = "cn-cn",
+            manufacturer = "test orga name",
+            productName = "test product",
+            requestAdminPrivileges = true,
+            autostart = true,
+            archX64 = false
+        )
+
+        // when
+        val wxsGenerator = WxsFileGenerator(testLogger, uuidGeneratorService)
+        wxsGenerator.generate(testData)
+
+        // then
+        val generatedWxs = testTargetFile.readToString()
+        val expectedWxs = buildExpectedWxs("expected-en.wxs.mustache")
 
         assertThat(generatedWxs).isEqualTo(expectedWxs)
     }

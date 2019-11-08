@@ -37,6 +37,7 @@
         {{#requestAdminPrivileges}}
         <Property Id="MSIUSEREALADMINDETECTION" Value="1" />
         {{/requestAdminPrivileges}}
+        <MajorUpgrade AllowSameVersionUpgrades='yes' DowngradeErrorMessage="{{messageDowngradeError}}"/>
         <Media Id='1' Cabinet='installer.cab' EmbedCab='yes' DiskPrompt="Installer Failure (DiskPrompt)"/>
         <Property Id='DiskPrompt' Value="{{productName}} Installation [1]"/>
 
