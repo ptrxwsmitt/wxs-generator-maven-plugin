@@ -91,6 +91,9 @@ Path to the Background Image for the welcome and finish screens (493 x 312)
 ##### bannerTop
 Path to the Banner Image for banner on the top (493 x 58)
 
+##### x64
+Switch for enabling/disabling 64 bit architecture installer (default 'true').
+
 ## Licence Information
 MIT Licence (see LICENCE File)
 
@@ -104,3 +107,9 @@ Desktop Shortcut of bat file can now be pinned to Task Bar
 
 ##### 2019-08-01
 Start Menu Entry is now created automatically
+
+##### 2019-11-08
+Fixed some issues concerning a blocked wxs result file.\
+Improved the version setting, to have a maximum of 3 components (according to windows limitations).\
+Added a feature for enabling/disabling x64 architecture.
+
