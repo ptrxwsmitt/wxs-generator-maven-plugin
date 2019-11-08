@@ -22,7 +22,6 @@ class WxsFileCreatorTest {
 
     private var root: Path? = null
     private val testTargetFile: Path = Paths.get("tmp/test.wxs")
-    private val expectedFile: Path = Paths.get("src/test/resources/expected.wxs")
 
     class ExpectedTemplate(val testDirectory: String)
 

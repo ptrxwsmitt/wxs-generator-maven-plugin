@@ -8,8 +8,6 @@ import wxsgen.model.WxsGeneratorParameter
 import wxsgen.plugin.log.PluginLogImpl
 import wxsgen.service.BatchFileGenerator
 import wxsgen.service.WxsFileGenerator
-import java.lang.Math.min
-import java.lang.StringBuilder
 import java.nio.file.Paths
 
 /**
