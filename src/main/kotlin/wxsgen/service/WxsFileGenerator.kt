@@ -29,7 +29,6 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
         Files.createDirectories(targetFilePath.parent)
         Files.deleteIfExists(targetFilePath)
 
-        val upgradeUUID = uuidGenerator.generateUuid()
         val postInstallActionList = createActions(param.runPostInstall)
         val preUninstallActionList = createActions(param.runPreUninstall)
         val mainExecutable = executablePath.toString()
@@ -43,8 +42,11 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
             parent = null
         )
 
+        // according to this stackoverflow entry
+        // https://stackoverflow.com/questions/500703/how-to-get-wix-to-update-a-previously-installed-version-of-a-program
+        // for an upgrade the product id should be an ever changing ID and upgradeId should be stable
         val templateData = InstallerTemplateData(
-            idUUID = param.productUid,
+            idUUID = uuidGenerator.generateUuid(),
             productName = param.productName,
             productVersion = param.productVersion,
             productComment = param.productComment,
@@ -58,7 +60,7 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
             runPreUninstall = preUninstallActionList,
             iconPath = param.iconPath,
             licenceRtfPath = param.licenceRtfPath,
-            upgradeCodeUUID = upgradeUUID,
+            upgradeCodeUUID = param.productUid,
             rootDir = rootDir,
             archX64 = param.archX64
         )

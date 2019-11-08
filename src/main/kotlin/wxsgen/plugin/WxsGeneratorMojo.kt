@@ -8,6 +8,8 @@ import wxsgen.model.WxsGeneratorParameter
 import wxsgen.plugin.log.PluginLogImpl
 import wxsgen.service.BatchFileGenerator
 import wxsgen.service.WxsFileGenerator
+import java.lang.Math.min
+import java.lang.StringBuilder
 import java.nio.file.Paths
 
 /**
@@ -140,12 +142,16 @@ class WxsGeneratorMojo : AbstractMojo() {
         if (!targetFile.endsWith(suffix = ".wxs", ignoreCase = true)) {
             throw MojoFailureException("targetFile [$targetFile] must end with \".wxs\"")
         }
+        if (!isVersionValid(productVersion)) {
+            throw MojoFailureException("version must match pattern '${VERSION_PATTERN}' ")
+        }
+
 
         val runPostInstallList = if (runPostInstall.isBlank()) emptyList() else runPostInstall.split(";")
         val runPreUninstallList = if (runPreUninstall.isBlank()) emptyList() else runPreUninstall.split(";")
 
         //remove snapshot version
-        val projectVersionCut = productVersion.substringBefore('-')
+        val projectVersionCut = normalizeVersion(productVersion)
 
         val params = WxsGeneratorParameter(
             productUid = productUid,
@@ -172,10 +178,10 @@ class WxsGeneratorMojo : AbstractMojo() {
 
         wixCreator.generate(params)
 
-
         if (provideBuildBatch.toBoolean()) {
             batGenerator.generateBuildBatch(Paths.get(targetFile), installerLocale, x64.toBoolean())
         }
 
     }
+
 }
