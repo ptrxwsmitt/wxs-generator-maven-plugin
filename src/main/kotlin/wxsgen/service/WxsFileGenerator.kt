@@ -53,8 +53,15 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
         val dialogBackgroundChecked = Paths.get(param.dialogBackground).toString()
         val bannerTopChecked = Paths.get(param.bannerTop).toString()
 
+        val rootDirName:String
+        if (!isBlank(param.installDir)) {
+            rootDirName = param.installDir!!
+        } else {
+            rootDirName = param.productName
+        }
+
         val rootDir = DirectoryTemplateData(
-            dirName = param.productName,
+            dirName = rootDirName,
             dirId = "INSTALLDIR",
             parent = null
         )

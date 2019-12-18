@@ -23,5 +23,6 @@ data class WxsGeneratorParameter(
     val targetFile: String,
     val runPostInstall: List<String> = emptyList(),
     val runPreUninstall: List<String> = emptyList(),
-    val archX64: Boolean = true
+    val archX64: Boolean = true,
+    var installDir: String? = null
 )

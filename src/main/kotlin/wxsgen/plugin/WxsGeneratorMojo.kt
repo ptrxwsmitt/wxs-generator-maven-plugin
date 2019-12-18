@@ -102,13 +102,18 @@ class WxsGeneratorMojo : AbstractMojo() {
     @Parameter
     private var bannerTop = ""
 
-
     /**
      * List of Paths to executables to be run before uninstall.
      */
     @Parameter
     private var runPreUninstall = ""
 
+
+    /**
+     * optional parameter to define the install directory manually
+     */
+    @Parameter
+    private var installDir: String? = null
 
     /**
      * Switch for enabling/disabling x64 architecture (default 'true').
@@ -166,7 +171,8 @@ class WxsGeneratorMojo : AbstractMojo() {
             productComment = productDescription,
             runPostInstall = runPostInstallList,
             runPreUninstall = runPreUninstallList,
-            archX64 = x64.toBoolean()
+            archX64 = x64.toBoolean(),
+            installDir = installDir
         )
 
         log.debug("wxp generator parameters:\n$params")

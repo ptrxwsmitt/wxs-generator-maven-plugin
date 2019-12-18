@@ -55,6 +55,9 @@ Give your product a UID (I recommend using a UUID Generator).
 ##### productName
 Defaults to maven ${project.name}.
 
+##### installDir
+Install directory: Relative path within the directory "Program Files" (or the corresponding x86 directory). Defaults to parameter "productName".
+
 ##### productVersion
 Defaults to maven ${project.version}. Suffix "-SNAPSHOT" will be removed automatically.\
 The Version must match regex [0-9]+(\\.[0-9]+)*; WIX Toolset will fail otherwise.
@@ -112,4 +115,9 @@ Start Menu Entry is now created automatically
 Fixed some issues concerning a blocked wxs result file.\
 Improved the version setting, to have a maximum of 3 components (according to windows limitations).\
 Added a feature for enabling/disabling x64 architecture.
+
+
+##### 2019-12-18
+Made mainExecutable optional.\
+Added installDir Parameter
 

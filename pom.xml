@@ -6,7 +6,7 @@
 
     <groupId>com.github.ptrxwsmitt</groupId>
     <artifactId>wxs-generator-maven-plugin</artifactId>
-    <version>0.7.3</version>
+    <version>0.8.0</version>
     <packaging>maven-plugin</packaging>
 
     <name>WXS Generator - Maven Plugin</name>
