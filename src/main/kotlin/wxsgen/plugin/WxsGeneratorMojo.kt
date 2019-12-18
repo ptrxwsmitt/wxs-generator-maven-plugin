@@ -131,9 +131,6 @@ class WxsGeneratorMojo : AbstractMojo() {
         if (rootPath.isBlank()) {
             throw MojoFailureException("rootPath must be set")
         }
-        if (mainExecutable.isBlank()) {
-            throw MojoFailureException("mainExecutable must be set")
-        }
         if (targetFile.isBlank()) {
             throw MojoFailureException("targetFile must not be empty")
         }

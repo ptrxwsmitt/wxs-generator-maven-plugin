@@ -1,5 +1,6 @@
 package wxsgen.service
 
+import org.codehaus.plexus.util.StringUtils.isBlank
 import wxsgen.common.MustacheUtil
 import wxsgen.log.LogFacade
 import wxsgen.model.WxsGeneratorParameter
@@ -18,13 +19,13 @@ import java.util.*
  */
 class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: UuidGenerator = JdkUuidGenerator()) {
 
-    fun  loadResourceBundle(languageTag: String):ResourceBundle {
+    fun loadResourceBundle(languageTag: String): ResourceBundle {
         Locale.setDefault(Locale.ENGLISH)
         val locale = Locale.forLanguageTag(languageTag)
-        return ResourceBundle.getBundle("bundles/messages",locale)
+        return ResourceBundle.getBundle("bundles/messages", locale)
     }
 
-    fun readMessageDowngradeError(resourceBundle: ResourceBundle, productName:String):String {
+    fun readMessageDowngradeError(resourceBundle: ResourceBundle, productName: String): String {
         return format(resourceBundle.getString("messageDowngradeError"), productName)
     }
 
@@ -33,7 +34,13 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
      */
     fun generate(param: WxsGeneratorParameter) {
         val rootPathLocal = Paths.get(param.rootPath)
-        val executablePath = Paths.get(param.rootPath, param.mainExecutable)
+
+        val mainExecutable = if (!isBlank(param.mainExecutable)) {
+            Paths.get(param.rootPath, param.mainExecutable).toString()
+        } else {
+            null
+        }
+
         val targetFilePath = Paths.get(param.targetFile)
         log.info(format("Generating WXS File [%s]", targetFilePath))
 
@@ -42,7 +49,6 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
 
         val postInstallActionList = createActions(param.runPostInstall)
         val preUninstallActionList = createActions(param.runPreUninstall)
-        val mainExecutable = executablePath.toString()
 
         val dialogBackgroundChecked = Paths.get(param.dialogBackground).toString()
         val bannerTopChecked = Paths.get(param.bannerTop).toString()

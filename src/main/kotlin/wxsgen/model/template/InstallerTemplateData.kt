@@ -5,7 +5,7 @@ data class InstallerTemplateData(
     val productVersion: String,
     val productComment: String,
     val manufacturer: String,
-    val mainExecutable: String,
+    val mainExecutable: String?,
     val autostart: Boolean,
     val requestAdminPrivileges: Boolean,
     val dialogBackground: String,
