@@ -44,6 +44,8 @@
         <junit.version>5.4.2</junit.version>
 
         <owasp.version>5.1.1</owasp.version>
+        <maven.javadoc.plugin.version>3.1.1</maven.javadoc.plugin.version>
+        <maven.source.plugin.version>3.2.0</maven.source.plugin.version>
     </properties>
 
     <dependencies>
@@ -180,6 +182,35 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven.source.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadoc</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                </configuration>
             </plugin>
         </plugins>
     </build>
