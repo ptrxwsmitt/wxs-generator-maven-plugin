@@ -1,0 +1,15 @@
+image: maven:3-jdk-11-slim
+
+stages:
+  - build
+  - test
+
+build:
+   stage: build
+   script:
+     - mvn clean compile
+
+test:
+  stage: test
+  script:
+    - mvn test
