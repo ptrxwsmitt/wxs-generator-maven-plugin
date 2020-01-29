@@ -41,7 +41,10 @@
         <Media Id='1' Cabinet='installer.cab' EmbedCab='yes' DiskPrompt="Installer Failure (DiskPrompt)"/>
         <Property Id='DiskPrompt' Value="{{productName}} Installation [1]"/>
 
+        {{#iconPath}}
         <Icon Id="icon.ico" SourceFile="{{iconPath}}"/>
+		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
+        {{/iconPath}}
 
         <Feature Id='Complete' Level='1'>
             {{#components}}

@@ -25,7 +25,8 @@
         <Media Id='1' Cabinet='installer.cab' EmbedCab='yes' DiskPrompt="Installer Failure (DiskPrompt)"/>
         <Property Id='DiskPrompt' Value="test product Installation [1]"/>
 
-        <Icon Id="icon.ico" SourceFile=""/>
+        <Icon Id="icon.ico" SourceFile="test.ico"/>
+		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
 
         <Feature Id='Complete' Level='1'>
                 <ComponentRef Id='component_1'/>

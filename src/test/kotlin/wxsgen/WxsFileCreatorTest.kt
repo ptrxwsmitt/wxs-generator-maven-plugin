@@ -43,7 +43,7 @@ class WxsFileCreatorTest {
             productVersion = "0.5.1",
             mainExecutable = "run.bat",
             productComment = "test comment",
-            iconPath = "",
+            iconPath = "test.ico",
             licenceRtfPath = "",
             installerLocale = "de-de",
             manufacturer = "test orga name",
