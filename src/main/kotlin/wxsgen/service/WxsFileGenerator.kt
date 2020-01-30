@@ -35,10 +35,10 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
     fun generate(param: WxsGeneratorParameter) {
         val rootPathLocal = Paths.get(param.rootPath)
 
-        val mainExecutable = if (!isBlank(param.mainExecutable)) {
-            Paths.get(param.rootPath, param.mainExecutable).toString()
+        val mainExecutablePath = if (!isBlank(param.mainExecutable)) {
+            Paths.get(param.rootPath, param.mainExecutable)
         } else {
-            null
+            Paths.get("")
         }
 
         val targetFilePath = Paths.get(param.targetFile)
@@ -78,7 +78,7 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
             productVersion = param.productVersion,
             productComment = param.productComment,
             manufacturer = param.manufacturer,
-            mainExecutable = mainExecutable,
+            mainExecutablePath = mainExecutablePath,
             autostart = param.autostart,
             dialogBackground = dialogBackgroundChecked,
             bannerTop = bannerTopChecked,

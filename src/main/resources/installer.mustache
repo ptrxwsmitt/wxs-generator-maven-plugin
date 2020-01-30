@@ -67,10 +67,14 @@
                     {{/rootDir}}
                 </Directory>
             </Directory>
+			{{#desktopShortcuts}}
             <Directory Id="DesktopFolder" Name="Desktop"/>
+			{{/desktopShortcuts}}
+			{{#startMenuShortcuts}}
             <Directory Id="ProgramMenuFolder">
-                <Directory Id="dirProductStartMenu" Name="{{productName}}"/>
+                <Directory Id="StartMenuProductFolder" Name="{{productName}}"/>
             </Directory>
+			{{/startMenuShortcuts}}
         </Directory>
 
         {{>desktopShortcuts}}

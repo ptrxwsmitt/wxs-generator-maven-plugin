@@ -1,11 +1,13 @@
 package wxsgen.model.template
 
+import java.nio.file.Path
+
 data class InstallerTemplateData(
     val productName: String,
     val productVersion: String,
     val productComment: String,
     val manufacturer: String,
-    val mainExecutable: String?,
+    val mainExecutablePath: Path,
     val autostart: Boolean,
     val requestAdminPrivileges: Boolean,
     val dialogBackground: String,

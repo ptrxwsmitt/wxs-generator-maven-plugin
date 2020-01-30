@@ -86,7 +86,7 @@
             </Directory>
             <Directory Id="DesktopFolder" Name="Desktop"/>
             <Directory Id="ProgramMenuFolder">
-                <Directory Id="dirProductStartMenu" Name="test product"/>
+                <Directory Id="StartMenuProductFolder" Name="test product"/>
             </Directory>
         </Directory>
 
@@ -103,7 +103,7 @@
         </Component>
     </DirectoryRef>
 
-            <DirectoryRef Id="dirProductStartMenu">
+            <DirectoryRef Id="StartMenuProductFolder">
         <Component Id="component_start_menu_shortcut_6" Guid="new-UUID">
 
                 <Shortcut Id="start_menu_shortcut_6"
@@ -113,7 +113,7 @@
                           IconIndex="0"
                           Target="[SystemFolder]cmd.exe"
                           Arguments=" /k &quot;[INSTALLDIR]run.bat&quot;"/>
-            <RemoveFolder Id="CleanUpProductStartMenu" Directory="dirProductStartMenu" On="uninstall"/>
+            <RemoveFolder Id="CleanUpProductStartMenu" Directory="StartMenuProductFolder" On="uninstall"/>
             <RegistryValue Root="HKCU" Key="Software\test orga name\test product" Name="start_menu_shortcut_6"
                            Type="integer" Value="1" KeyPath="yes"/>
         </Component>
