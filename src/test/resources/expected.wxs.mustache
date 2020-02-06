@@ -20,12 +20,13 @@
                  InstallScope='perMachine'
         />
 
+        <WixVariable Id="WixUILicenseRtf" Value="{{testDirectory}}\licence.rtf" />
         <Property Id="MSIUSEREALADMINDETECTION" Value="1" />
         <MajorUpgrade AllowSameVersionUpgrades='yes' DowngradeErrorMessage="Eine neuere Version der Anwendung test product ist bereits installiert. Der Installer wird beendet."/>
         <Media Id='1' Cabinet='installer.cab' EmbedCab='yes' DiskPrompt="Installer Failure (DiskPrompt)"/>
         <Property Id='DiskPrompt' Value="test product Installation [1]"/>
 
-        <Icon Id="icon.ico" SourceFile="test.ico"/>
+        <Icon Id="icon.ico" SourceFile="{{testDirectory}}\test.ico"/>
 		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
 
         <Feature Id='Complete' Level='1'>

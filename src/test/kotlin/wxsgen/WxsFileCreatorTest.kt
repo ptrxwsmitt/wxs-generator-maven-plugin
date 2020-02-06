@@ -45,7 +45,7 @@ class WxsFileCreatorTest {
             mainExecutable = "run.bat",
             productComment = "test comment",
             iconPath = "test.ico",
-            licenceRtfPath = "",
+            licenceRtfPath = "licence.rtf",
             installerLocale = "de-de",
             manufacturer = "test orga name",
             productName = "test product",
