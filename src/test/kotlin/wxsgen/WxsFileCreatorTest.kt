@@ -83,6 +83,7 @@ class WxsFileCreatorTest {
             installerLocale = "de-de",
             manufacturer = "test orga name",
             productName = "test product",
+            sharedLibraryDir = "lib",
             requestAdminPrivileges = true,
             autostart = true,
             archX64 = true
@@ -198,7 +199,6 @@ class WxsFileCreatorTest {
 
         assertThat(generatedWxs).isEqualTo(expectedWxs)
     }
-
 
     private fun buildExpectedWxs(template: String) =
         fillTemplate(template, ExpectedTemplate(root!!.toAbsolutePath().toString()))

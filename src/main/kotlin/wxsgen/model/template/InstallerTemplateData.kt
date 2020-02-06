@@ -14,6 +14,7 @@ data class InstallerTemplateData(
     val bannerTop: String,
     val iconPath: String,
     val licenceRtfPath: String,
+    val sharedLibraryPath: Path,
     val idUUID: String,
     val upgradeCodeUUID: String,
     val components: MutableList<String> = mutableListOf(),
@@ -25,5 +26,3 @@ data class InstallerTemplateData(
     val messageDowngradeError: String,
     val archX64: Boolean = true
 )
-
-

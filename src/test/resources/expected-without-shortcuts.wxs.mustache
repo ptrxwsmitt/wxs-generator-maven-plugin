@@ -42,11 +42,11 @@
                 <Directory Id="dirCompany" Name="test orga name">
                         <Directory Id="INSTALLDIR" Name="test product">
                                 <Directory Id="directory_1" Name="conf">
-                                        <Component Id='component_1' Guid='new-UUID'>
+                                        <Component Id='component_1' Guid='new-UUID' SharedDllRefCount='no'>
         <File Id='file_1' Name='app.conf' DiskId='1' Source='{{testDirectory}}\conf\app.conf' KeyPath='yes'>
         </File>
     </Component>
-    <Component Id='component_2' Guid='new-UUID'>
+    <Component Id='component_2' Guid='new-UUID' SharedDllRefCount='no'>
         <File Id='file_2' Name='log.xml' DiskId='1' Source='{{testDirectory}}\conf\log.xml' KeyPath='yes'>
         </File>
     </Component>
@@ -54,22 +54,22 @@
 
                                 </Directory>
                                 <Directory Id="directory_2" Name="lib">
-                                        <Component Id='component_3' Guid='new-UUID'>
+                                        <Component Id='component_3' Guid='new-UUID' SharedDllRefCount='no'>
         <File Id='file_3' Name='apache.jar' DiskId='1' Source='{{testDirectory}}\lib\apache.jar' KeyPath='yes'>
         </File>
     </Component>
-    <Component Id='component_4' Guid='new-UUID'>
+    <Component Id='component_4' Guid='new-UUID' SharedDllRefCount='no'>
         <File Id='file_4' Name='hibernate.jar' DiskId='1' Source='{{testDirectory}}\lib\hibernate.jar' KeyPath='yes'>
         </File>
     </Component>
-    <Component Id='component_5' Guid='new-UUID'>
+    <Component Id='component_5' Guid='new-UUID' SharedDllRefCount='no'>
         <File Id='file_5' Name='random.jar' DiskId='1' Source='{{testDirectory}}\lib\random.jar' KeyPath='yes'>
         </File>
     </Component>
 
 
                                 </Directory>
-                                <Component Id='component_6' Guid='new-UUID'>
+                                <Component Id='component_6' Guid='new-UUID' SharedDllRefCount='no'>
         <File Id='file_6' Name='run.bat' DiskId='1' Source='{{testDirectory}}\run.bat' KeyPath='yes'>
         </File>
     </Component>

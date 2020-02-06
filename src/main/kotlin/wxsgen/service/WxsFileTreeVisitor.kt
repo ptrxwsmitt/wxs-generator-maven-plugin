@@ -58,12 +58,19 @@ class WxsFileTreeVisitor(private val templateData: InstallerTemplateData, privat
 
         val isMainExecutable = templateData.mainExecutablePath.toString() == file.toString()
 
+        val sharedFile = if (file.startsWith(templateData.sharedLibraryPath)) {
+            "yes"
+        } else {
+            "no"
+        }
+
         val currentFile = FileTemplateData(
             fileId = "file_$componentAndFileIndex",
             fileName = file.fileName.toString(),
             fileSource = file.toString(),
             componentId = "component_$componentAndFileIndex",
             componentUUID = uuidGenerator.generateUuid(),
+            componentShared = sharedFile,
             mainExecutable = isMainExecutable,
             info = templateData,
             parent = currentDirectory

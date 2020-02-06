@@ -41,6 +41,13 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
             Paths.get("")
         }
 
+        val sharedLibraryPath = if (!isBlank(param.sharedLibraryDir)) {
+            Paths.get(param.rootPath, param.sharedLibraryDir)
+        } else {
+            Paths.get("")
+        }
+        log.info(format("Shared library path is [%s]", sharedLibraryPath))
+
         val targetFilePath = Paths.get(param.targetFile)
         log.info(format("Generating WXS File [%s]", targetFilePath))
 
@@ -87,6 +94,7 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
             runPreUninstall = preUninstallActionList,
             iconPath = param.iconPath,
             licenceRtfPath = param.licenceRtfPath,
+            sharedLibraryPath = sharedLibraryPath,
             upgradeCodeUUID = param.productUid,
             rootDir = rootDir,
             archX64 = param.archX64,
