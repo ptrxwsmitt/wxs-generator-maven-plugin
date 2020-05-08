@@ -15,7 +15,7 @@
                  {{#archX64}}
                  Platform='x64'
                  {{/archX64}}
-                 InstallerVersion='200'
+                 InstallerVersion='500'
                  Languages='1031'
                  Compressed='yes'
                  SummaryCodepage='1252'
@@ -41,7 +41,10 @@
         <Media Id='1' Cabinet='installer.cab' EmbedCab='yes' DiskPrompt="Installer Failure (DiskPrompt)"/>
         <Property Id='DiskPrompt' Value="{{productName}} Installation [1]"/>
 
+        {{#iconPath}}
         <Icon Id="icon.ico" SourceFile="{{iconPath}}"/>
+		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
+        {{/iconPath}}
 
         <Feature Id='Complete' Level='1'>
             {{#components}}
@@ -64,10 +67,14 @@
                     {{/rootDir}}
                 </Directory>
             </Directory>
+			{{#desktopShortcuts}}
             <Directory Id="DesktopFolder" Name="Desktop"/>
+			{{/desktopShortcuts}}
+			{{#startMenuShortcuts}}
             <Directory Id="ProgramMenuFolder">
-                <Directory Id="dirProductStartMenu" Name="{{productName}}"/>
+                <Directory Id="StartMenuProductFolder" Name="{{productName}}"/>
             </Directory>
+			{{/startMenuShortcuts}}
         </Directory>
 
         {{>desktopShortcuts}}

@@ -1,5 +1,5 @@
 {{#startMenuShortcuts}}
-    <DirectoryRef Id="dirProductStartMenu">
+    <DirectoryRef Id="StartMenuProductFolder">
         <Component Id="{{componentId}}" Guid="{{componentUUID}}">
 
             {{#isBatch}}
@@ -19,7 +19,7 @@
                           IconIndex="0"
                           Target="[{{refDirectoryId}}]{{refFileName}}"/>
             {{/isBatch}}
-            <RemoveFolder Id="CleanUpProductStartMenu" Directory="dirProductStartMenu" On="uninstall"/>
+            <RemoveFolder Id="CleanUpProductStartMenu" Directory="StartMenuProductFolder" On="uninstall"/>
             <RegistryValue Root="HKCU" Key="Software\{{manufacturer}}\{{productName}}" Name="{{shortcutId}}"
                            Type="integer" Value="1" KeyPath="yes"/>
         </Component>

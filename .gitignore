@@ -10,3 +10,6 @@ logs/
 **/*.class
 **/*.iml
 tmp/
+.settings/
+\.classpath
+\.project

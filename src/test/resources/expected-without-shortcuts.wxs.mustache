@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+    <Product Name='test product'
+             Manufacturer='test orga name'
+             Id='new-UUID'
+             UpgradeCode='myprodiuct.id'
+             Language='1031'
+             Codepage='1252'
+             Version='0.5.1'>
+        <Package Id='*'
+                 Keywords='Installer'
+                 Description="test product Installer"
+                 Comments='test comment'
+                 Manufacturer='test orga name'
+                 InstallerVersion='500'
+                 Languages='1031'
+                 Compressed='yes'
+                 SummaryCodepage='1252'
+                 InstallPrivileges='elevated'
+                 InstallScope='perMachine'
+        />
+
+        <Property Id="MSIUSEREALADMINDETECTION" Value="1" />
+        <MajorUpgrade AllowSameVersionUpgrades='yes' DowngradeErrorMessage="Eine neuere Version der Anwendung test product ist bereits installiert. Der Installer wird beendet."/>
+        <Media Id='1' Cabinet='installer.cab' EmbedCab='yes' DiskPrompt="Installer Failure (DiskPrompt)"/>
+        <Property Id='DiskPrompt' Value="test product Installation [1]"/>
+
+        <Icon Id="icon.ico" SourceFile="{{testDirectory}}\test.ico"/>
+		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
+
+        <Feature Id='Complete' Level='1'>
+                <ComponentRef Id='component_1'/>
+                <ComponentRef Id='component_2'/>
+                <ComponentRef Id='component_3'/>
+                <ComponentRef Id='component_4'/>
+                <ComponentRef Id='component_5'/>
+                <ComponentRef Id='component_6'/>
+        </Feature>
+
+        <Directory Id='TARGETDIR' Name='SourceDir'>
+            <Directory Id='ProgramFilesFolder' Name='dirProgramFiles'>
+                <Directory Id="dirCompany" Name="test orga name">
+                        <Directory Id="INSTALLDIR" Name="test product">
+                                <Directory Id="directory_1" Name="conf">
+                                        <Component Id='component_1' Guid='new-UUID' SharedDllRefCount='no'>
+        <File Id='file_1' Name='app.conf' DiskId='1' Source='{{testDirectory}}\conf\app.conf' KeyPath='yes'>
+        </File>
+    </Component>
+    <Component Id='component_2' Guid='new-UUID' SharedDllRefCount='no'>
+        <File Id='file_2' Name='log.xml' DiskId='1' Source='{{testDirectory}}\conf\log.xml' KeyPath='yes'>
+        </File>
+    </Component>
+
+
+                                </Directory>
+                                <Directory Id="directory_2" Name="lib">
+                                        <Component Id='component_3' Guid='new-UUID' SharedDllRefCount='no'>
+        <File Id='file_3' Name='apache.jar' DiskId='1' Source='{{testDirectory}}\lib\apache.jar' KeyPath='yes'>
+        </File>
+    </Component>
+    <Component Id='component_4' Guid='new-UUID' SharedDllRefCount='no'>
+        <File Id='file_4' Name='hibernate.jar' DiskId='1' Source='{{testDirectory}}\lib\hibernate.jar' KeyPath='yes'>
+        </File>
+    </Component>
+    <Component Id='component_5' Guid='new-UUID' SharedDllRefCount='no'>
+        <File Id='file_5' Name='random.jar' DiskId='1' Source='{{testDirectory}}\lib\random.jar' KeyPath='yes'>
+        </File>
+    </Component>
+
+
+                                </Directory>
+                                <Component Id='component_6' Guid='new-UUID' SharedDllRefCount='no'>
+        <File Id='file_6' Name='run.bat' DiskId='1' Source='{{testDirectory}}\run.bat' KeyPath='yes'>
+        </File>
+    </Component>
+
+                        </Directory>
+                </Directory>
+            </Directory>
+        </Directory>
+
+        
+        
+
+        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+        <UIRef Id="WixUI_InstallDir"/>
+
+
+
+
+        <InstallExecuteSequence>
+        </InstallExecuteSequence>
+    </Product>
+</Wix>

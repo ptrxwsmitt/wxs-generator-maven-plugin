@@ -115,6 +115,14 @@ class WxsGeneratorMojo : AbstractMojo() {
     @Parameter
     private var installDir: String? = null
 
+
+    /**
+     * optional parameter to define the directory with shared libraries. The path is relative to the rootPath.<br>
+     * The libraries in this directory will be only uninstalled when no other application is installed which also use the libraries.
+     */
+    @Parameter
+    private var sharedLibraryDir: String? = null
+
     /**
      * Switch for enabling/disabling x64 architecture (default 'true').
      */
@@ -172,7 +180,8 @@ class WxsGeneratorMojo : AbstractMojo() {
             runPostInstall = runPostInstallList,
             runPreUninstall = runPreUninstallList,
             archX64 = x64.toBoolean(),
-            installDir = installDir
+            installDir = installDir,
+            sharedLibraryDir = sharedLibraryDir
         )
 
         log.debug("wxp generator parameters:\n$params")

@@ -10,6 +10,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.SimpleFileVisitor
 import java.nio.file.attribute.BasicFileAttributes
+import java.util.Objects.isNull
 
 
 /**
@@ -19,7 +20,6 @@ import java.nio.file.attribute.BasicFileAttributes
  */
 class WxsFileTreeVisitor(private val templateData: InstallerTemplateData, private val uuidGenerator: UuidGenerator = JdkUuidGenerator()) : SimpleFileVisitor<Path>() {
 
-    private val mainExecutablePath = Paths.get(templateData.mainExecutable)
     private val wxsExcludeDirName = ".wxs-exclude"
 
     // visitor working variables:
@@ -56,7 +56,13 @@ class WxsFileTreeVisitor(private val templateData: InstallerTemplateData, privat
         //create file entry and add it to the current directory
         componentAndFileIndex++
 
-        val isMainExecutable = mainExecutablePath.toString() == file.toString()
+        val isMainExecutable = templateData.mainExecutablePath.toString() == file.toString()
+
+        val sharedFile = if (file.startsWith(templateData.sharedLibraryPath)) {
+            "yes"
+        } else {
+            "no"
+        }
 
         val currentFile = FileTemplateData(
             fileId = "file_$componentAndFileIndex",
@@ -64,6 +70,7 @@ class WxsFileTreeVisitor(private val templateData: InstallerTemplateData, privat
             fileSource = file.toString(),
             componentId = "component_$componentAndFileIndex",
             componentUUID = uuidGenerator.generateUuid(),
+            componentShared = sharedFile,
             mainExecutable = isMainExecutable,
             info = templateData,
             parent = currentDirectory

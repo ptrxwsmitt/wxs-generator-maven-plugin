@@ -73,6 +73,10 @@ Defaults to maven ${project.organization.name}.
 ##### rootPath (mandatory)
 Path to the directory which contains all files in the required structure of the target installation (e.g. assembled by maven assembly plugin).
 
+##### sharedLibraryDir
+Shared library directory: Relative path to the "rootPath" parameter. Defaults to parameter "productName".\
+The libraries in this directory will be only uninstalled when no other application is installed which also use the libraries.
+
 ##### targetFile
 Filename of the wxs-file to be generated (e.g. "installer.wxs").
 

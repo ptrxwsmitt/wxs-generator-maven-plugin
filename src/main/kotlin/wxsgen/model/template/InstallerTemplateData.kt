@@ -1,17 +1,20 @@
 package wxsgen.model.template
 
+import java.nio.file.Path
+
 data class InstallerTemplateData(
     val productName: String,
     val productVersion: String,
     val productComment: String,
     val manufacturer: String,
-    val mainExecutable: String?,
+    val mainExecutablePath: Path,
     val autostart: Boolean,
     val requestAdminPrivileges: Boolean,
     val dialogBackground: String,
     val bannerTop: String,
     val iconPath: String,
     val licenceRtfPath: String,
+    val sharedLibraryPath: Path,
     val idUUID: String,
     val upgradeCodeUUID: String,
     val components: MutableList<String> = mutableListOf(),
@@ -23,5 +26,3 @@ data class InstallerTemplateData(
     val messageDowngradeError: String,
     val archX64: Boolean = true
 )
-
-

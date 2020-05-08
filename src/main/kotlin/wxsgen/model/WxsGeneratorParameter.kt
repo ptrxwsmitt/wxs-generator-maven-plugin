@@ -24,5 +24,6 @@ data class WxsGeneratorParameter(
     val runPostInstall: List<String> = emptyList(),
     val runPreUninstall: List<String> = emptyList(),
     val archX64: Boolean = true,
-    var installDir: String? = null
+    var installDir: String? = null,
+    var sharedLibraryDir: String? = null
 )

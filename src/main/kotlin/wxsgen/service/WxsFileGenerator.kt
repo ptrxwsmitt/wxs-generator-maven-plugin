@@ -35,10 +35,28 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
     fun generate(param: WxsGeneratorParameter) {
         val rootPathLocal = Paths.get(param.rootPath)
 
-        val mainExecutable = if (!isBlank(param.mainExecutable)) {
-            Paths.get(param.rootPath, param.mainExecutable).toString()
+        val licenceRtfPath = if (!isBlank(param.licenceRtfPath)) {
+            Paths.get(param.rootPath, param.licenceRtfPath).toString()
         } else {
-            null
+            ""
+        }
+
+        val iconPath = if (!isBlank(param.iconPath)) {
+            Paths.get(param.rootPath, param.iconPath).toString()
+        } else {
+            ""
+        }
+
+        val mainExecutablePath = if (!isBlank(param.mainExecutable)) {
+            Paths.get(param.rootPath, param.mainExecutable)
+        } else {
+            Paths.get("")
+        }
+
+        val sharedLibraryPath = if (!isBlank(param.sharedLibraryDir)) {
+            Paths.get(param.rootPath, param.sharedLibraryDir)
+        } else {
+            Paths.get("")
         }
 
         val targetFilePath = Paths.get(param.targetFile)
@@ -78,15 +96,16 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
             productVersion = param.productVersion,
             productComment = param.productComment,
             manufacturer = param.manufacturer,
-            mainExecutable = mainExecutable,
+            mainExecutablePath = mainExecutablePath,
             autostart = param.autostart,
             dialogBackground = dialogBackgroundChecked,
             bannerTop = bannerTopChecked,
             requestAdminPrivileges = param.requestAdminPrivileges,
             runPostInstall = postInstallActionList,
             runPreUninstall = preUninstallActionList,
-            iconPath = param.iconPath,
-            licenceRtfPath = param.licenceRtfPath,
+            iconPath = iconPath,
+            licenceRtfPath = licenceRtfPath,
+            sharedLibraryPath = sharedLibraryPath,
             upgradeCodeUUID = param.productUid,
             rootDir = rootDir,
             archX64 = param.archX64,

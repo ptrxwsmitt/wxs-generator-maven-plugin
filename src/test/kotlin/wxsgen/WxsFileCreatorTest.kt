@@ -13,6 +13,7 @@ import java.nio.file.Paths
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import org.junit.Ignore
 
 
 class WxsFileCreatorTest {
@@ -43,8 +44,8 @@ class WxsFileCreatorTest {
             productVersion = "0.5.1",
             mainExecutable = "run.bat",
             productComment = "test comment",
-            iconPath = "",
-            licenceRtfPath = "",
+            iconPath = "test.ico",
+            licenceRtfPath = "licence.rtf",
             installerLocale = "de-de",
             manufacturer = "test orga name",
             productName = "test product",
@@ -82,6 +83,7 @@ class WxsFileCreatorTest {
             installerLocale = "de-de",
             manufacturer = "test orga name",
             productName = "test product",
+            sharedLibraryDir = "lib",
             requestAdminPrivileges = true,
             autostart = true,
             archX64 = true
@@ -164,7 +166,39 @@ class WxsFileCreatorTest {
 
         assertThat(generatedWxs).isEqualTo(expectedWxs)
     }
+  
+    @Test
+    fun createWXSWithoutMainExecutable() {
 
+        // given
+        whenever(uuidGeneratorService.generateUuid()).thenReturn("new-UUID")
+        val testData = WxsGeneratorParameter(
+            productUid = "myprodiuct.id",
+            rootPath = root.toString(),
+            targetFile = testTargetFile.toString(),
+            productVersion = "0.5.1",
+            mainExecutable = "",
+            productComment = "test comment",
+            iconPath = "test.ico",
+            licenceRtfPath = "",
+            installerLocale = "de-de",
+            manufacturer = "test orga name",
+            productName = "test product",
+            requestAdminPrivileges = true,
+            autostart = true,
+            archX64 = false
+        )
+
+        // when
+        val wxsGenerator = WxsFileGenerator(testLogger, uuidGeneratorService)
+        wxsGenerator.generate(testData)
+
+        // then
+        val generatedWxs = testTargetFile.readToString()
+        val expectedWxs = buildExpectedWxs("expected-without-shortcuts.wxs.mustache")
+
+        assertThat(generatedWxs).isEqualTo(expectedWxs)
+    }
 
     private fun buildExpectedWxs(template: String) =
         fillTemplate(template, ExpectedTemplate(root!!.toAbsolutePath().toString()))
