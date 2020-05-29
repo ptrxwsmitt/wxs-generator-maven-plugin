@@ -6,7 +6,7 @@
 
     <groupId>com.github.ptrxwsmitt</groupId>
     <artifactId>wxs-generator-maven-plugin</artifactId>
-    <version>0.8.1</version>
+    <version>0.8.2</version>
     <packaging>maven-plugin</packaging>
 
     <name>WXS Generator - Maven Plugin</name>
@@ -21,6 +21,13 @@
         <developer>
             <id>ptrxwsmitt</id>
             <name>Patrick Waldschmitt</name>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>apollox</id>
+            <name>Frithjof Schulte</name>
             <roles>
                 <role>developer</role>
             </roles>

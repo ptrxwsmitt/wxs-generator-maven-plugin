@@ -18,7 +18,6 @@ class BatchFileGenerator {
         val mustacheTemplate = MustacheUtil.prepareTemplateFromResource("buildInstaller.bat.mustache")
 
         val batchPath = targetDirectory.resolve("buildInstaller.bat")
-        Files.createFile(batchPath)
         val batchWriter = Files.newBufferedWriter(batchPath)
         batchWriter.use {
             mustacheTemplate?.execute(it, batchTemplateData)?.flush()
