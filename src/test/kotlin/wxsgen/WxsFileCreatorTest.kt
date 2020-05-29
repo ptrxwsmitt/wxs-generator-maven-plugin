@@ -13,7 +13,6 @@ import java.nio.file.Paths
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import org.junit.Ignore
 
 
 class WxsFileCreatorTest {
