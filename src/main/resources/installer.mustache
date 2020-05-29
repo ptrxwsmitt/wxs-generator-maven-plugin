@@ -84,8 +84,8 @@
         <UIRef Id="WixUI_InstallDir"/>
 
         {{#runPostInstall}}
-        <CustomAction Id="{{actionId}}"
-                      ExeCommand="[INSTALLDIR]{{executable}}"
+        <CustomAction Id="AfterInstall_{{actionId}}"
+                      ExeCommand="{{executable}}"
                       Directory="INSTALLDIR"
                       Execute="deferred"
                       Impersonate="no"
@@ -93,8 +93,8 @@
         {{/runPostInstall}}
 
         {{#runPreUninstall}}
-            <CustomAction Id="BeforeUninstall{{actionId}}"
-                          ExeCommand="[INSTALLDIR]{{executable}}"
+            <CustomAction Id="BeforeUninstall_{{actionId}}"
+                          ExeCommand="{{executable}}"
                           Directory="INSTALLDIR"
                           Execute="deferred"
                           Impersonate="no"
@@ -104,10 +104,10 @@
 
         <InstallExecuteSequence>
         {{#runPostInstall}}
-            <Custom Action="{{actionId}}" After="InstallFiles">NOT Installed</Custom>
+            <Custom Action="AfterInstall_{{actionId}}" After="InstallFiles">NOT Installed</Custom>
         {{/runPostInstall}}
         {{#runPreUninstall}}
-            <Custom Action="BeforeUninstall{{actionId}}" After="InstallInitialize">REMOVE="ALL"</Custom>
+            <Custom Action="BeforeUninstall_{{actionId}}" After="InstallInitialize">REMOVE="ALL"</Custom>
         {{/runPreUninstall}}
         </InstallExecuteSequence>
     </Product>
