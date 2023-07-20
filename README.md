@@ -83,6 +83,12 @@ Filename of the wxs-file to be generated (e.g. "installer.wxs").
 ##### mainExecutable
 Path to the main Executable (e.g. *.bat file) relative to rootPath   
 
+##### autostart
+Switch for enabling autostart for main executable
+
+##### autostartParameter
+Additional parameters for autostart with the main executable
+
 ##### iconPath
 Path to the application's Icon (*.ico) relative to rootPath
 
@@ -125,3 +131,5 @@ Added a feature for enabling/disabling x64 architecture.
 Made mainExecutable optional.\
 Added installDir Parameter
 
+##### 2023-07-20
+Added `autostartParameter` parameter

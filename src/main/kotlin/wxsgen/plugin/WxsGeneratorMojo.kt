@@ -67,6 +67,12 @@ class WxsGeneratorMojo : AbstractMojo() {
     private var autostart = "true"
 
     /**
+     * Parameter for autostart with main executable.
+     */
+    @Parameter
+    private var autostartParameter = ""
+
+    /**
      * Icon Path (*.ico) relative to Root Path
      */
     @Parameter
@@ -167,6 +173,7 @@ class WxsGeneratorMojo : AbstractMojo() {
             targetFile = targetFile,
             mainExecutable = mainExecutable,
             autostart = autostart.toBoolean(),
+            autostartParameter = autostartParameter,
             requestAdminPrivileges = requestAdminPrivileges.toBoolean(),
             dialogBackground = dialogBackground,
             bannerTop = bannerTop,

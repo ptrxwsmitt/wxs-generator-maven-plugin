@@ -53,6 +53,12 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
             Paths.get("")
         }
 
+        val autostartParams = if (!isBlank(param.autostartParameter)) {
+            " " + param.autostartParameter
+        } else {
+            ""
+        }
+
         val sharedLibraryPath = if (!isBlank(param.sharedLibraryDir)) {
             Paths.get(param.rootPath, param.sharedLibraryDir)
         } else {
@@ -98,6 +104,7 @@ class WxsFileGenerator(private val log: LogFacade, private val uuidGenerator: Uu
             manufacturer = param.manufacturer,
             mainExecutablePath = mainExecutablePath,
             autostart = param.autostart,
+            autostartParameter = autostartParams,
             dialogBackground = dialogBackgroundChecked,
             bannerTop = bannerTopChecked,
             requestAdminPrivileges = param.requestAdminPrivileges,

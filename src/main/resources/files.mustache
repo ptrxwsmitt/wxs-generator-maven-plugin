@@ -7,7 +7,7 @@
         <RegistryValue Id="autostartMainExecutable" Root="HKMU" Action="write"
                        Key="Software\Microsoft\Windows\CurrentVersion\Run"
                        Name="{{info.productName}}"
-                       Value="[#{{fileId}}]"
+                       Value="[#{{fileId}}]{{info.autostartParameter}}"
                        Type="string" />
             {{/info.autostart}}
         {{/mainExecutable}}

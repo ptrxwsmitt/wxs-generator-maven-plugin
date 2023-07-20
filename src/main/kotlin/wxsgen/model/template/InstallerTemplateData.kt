@@ -9,6 +9,7 @@ data class InstallerTemplateData(
     val manufacturer: String,
     val mainExecutablePath: Path,
     val autostart: Boolean,
+    val autostartParameter: String,
     val requestAdminPrivileges: Boolean,
     val dialogBackground: String,
     val bannerTop: String,
