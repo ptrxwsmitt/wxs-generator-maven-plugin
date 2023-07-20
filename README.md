@@ -1,11 +1,12 @@
 # WXS Generator Maven Plugin
 
-The WXS Generator Maven Plugin generates a WXS file from your maven project. 
-WXS Files serve as Input for the Windows Installer XML Toolset (https://wixtoolset.org). 
+The WXS Generator Maven Plugin generates a WXS file from your maven project.
+WXS Files serve as Input for the Windows Installer XML Toolset (<https://wixtoolset.org>).
 
 ## Requirements
+
 In order to create an installer from a Maven Project, all files to be installed must be assembled into a distribution directory (e.g. which needs to be set in the configured rootPath).
-The Project must be assembled in a way that it might be started from the distribution directory. I personally recommend using the maven-assembly-plugin for this task (http://maven.apache.org/plugins/maven-assembly-plugin/).   
+The Project must be assembled in a way that it might be started from the distribution directory. I personally recommend using the maven-assembly-plugin for this task (<http://maven.apache.org/plugins/maven-assembly-plugin/>).
 
 ## Goals
 
@@ -13,12 +14,13 @@ generate-wxs
 
 ## Usage
 
+```xml
     <build>
         <plugins>
             <plugin>
                 <groupId>com.ptrxwsmitt</groupId>
                 <artifactId>wxs-generator-maven-plugin</artifactId>
-                <version>0.5</version>
+                <version>0.8.3</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -40,6 +42,7 @@ generate-wxs
             </plugin>
         </plugins>
     <build>
+```
 
 ## Configuration
 
@@ -48,88 +51,112 @@ The installer will automatically create a desktop link, which is not configurabl
 
 ### Parameters
 
-##### productUid (mandatory)
+#### productUid (mandatory)
 
 Give your product a UID (I recommend using a UUID Generator).
 
-##### productName
+#### productName
+
 Defaults to maven ${project.name}.
 
-##### installDir
+#### installDir
+
 Install directory: Relative path within the directory "Program Files" (or the corresponding x86 directory). Defaults to parameter "productName".
 
-##### productVersion
+#### productVersion
+
 Defaults to maven ${project.version}. Suffix "-SNAPSHOT" will be removed automatically.\
-The Version must match regex [0-9]+(\\.[0-9]+)*; WIX Toolset will fail otherwise.
+The Version must match regex `[0-9]+(\\.[0-9]+)*` WIX Toolset will fail otherwise.
+
 - Valid examples: 1.3.5, 2019.3
 - Invalid examples: 2.3a, 0.5-SNAPSHOT
 
-##### productDescription
+#### productDescription
+
 Defaults to maven ${project.description}.
 
-##### manufacturer (mandatory)
+#### manufacturer (mandatory)
+
 Defaults to maven ${project.organization.name}.
 
-##### rootPath (mandatory)
+#### rootPath (mandatory)
+
 Path to the directory which contains all files in the required structure of the target installation (e.g. assembled by maven assembly plugin).
 
-##### sharedLibraryDir
+#### sharedLibraryDir
+
 Shared library directory: Relative path to the "rootPath" parameter. Defaults to parameter "productName".\
 The libraries in this directory will be only uninstalled when no other application is installed which also use the libraries.
 
-##### targetFile
+#### targetFile
+
 Filename of the wxs-file to be generated (e.g. "installer.wxs").
 
-##### mainExecutable
-Path to the main Executable (e.g. *.bat file) relative to rootPath   
+#### mainExecutable
 
-##### autostart
+Path to the main Executable (e.g. *.bat file) relative to rootPath
+
+#### autostart
+
 Switch for enabling autostart for main executable
 
-##### autostartParameter
+#### autostartParameter
+
 Additional parameters for autostart with the main executable
 
-##### iconPath
+#### iconPath
+
 Path to the application's Icon (*.ico) relative to rootPath
 
-##### licenceRtfPath
+#### licenceRtfPath
+
 Path to Licence (*.rtf) relative to rootPath
 
-##### provideBuildBatch
+#### provideBuildBatch
+
 Decide whether you want the plugin to generate a "buildInstaller.bat" file for easy integration into your build process. This requires the WIX Toolset commands "candle" and "light" to be available within your systems PATH environment variable.
 
-##### dialogBackground
+#### dialogBackground
+
 Path to the Background Image for the welcome and finish screens (493 x 312)
 
-##### bannerTop
+#### bannerTop
+
 Path to the Banner Image for banner on the top (493 x 58)
 
-##### x64
+#### x64
+
 Switch for enabling/disabling 64 bit architecture installer (default 'true').
 
 ## Licence Information
+
 MIT Licence (see LICENCE File)
 
 ## Changelog
 
-##### 2019-07-17 
+#### 2019-07-17
+
 Initial Version
 
-##### 2019-07-19 
+#### 2019-07-19
+
 Desktop Shortcut of bat file can now be pinned to Task Bar
 
-##### 2019-08-01
+#### 2019-08-01
+
 Start Menu Entry is now created automatically
 
-##### 2019-11-08
+#### 2019-11-08
+
 Fixed some issues concerning a blocked wxs result file.\
 Improved the version setting, to have a maximum of 3 components (according to windows limitations).\
 Added a feature for enabling/disabling x64 architecture.
 
+#### 2019-12-18
 
-##### 2019-12-18
 Made mainExecutable optional.\
 Added installDir Parameter
 
-##### 2023-07-20
+#### 2023-07-20
+
 Added `autostartParameter` parameter
